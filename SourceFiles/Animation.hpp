@@ -12,6 +12,6 @@ public:
     std::map<std::string, int> statesMap;
     bool looping;
 
-    Animation(sf::Texture texture_, int numberOfFrames_, int widthOfFrame_, bool looping_, std::map<std::string, int> statesMap_){}
+    Animation(std::string pathToTexture, int numberOfFrames_, bool looping_, std::map<std::string, int> statesMap_){}
 
 };

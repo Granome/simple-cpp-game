@@ -1,10 +1,13 @@
 #include <Animation.hpp>
 
-Animation::Animation(sf::Texture texture_, int numberOfFrames_, int widthOfFrame_, bool looping_, std::map<std::string, int> statesMap_)
+Animation::Animation(std::string pathToTexture="", int numberOfFrames_=1, bool looping_=true, std::map<std::string, int> statesMap_={})
 {
-    texture = texture_;
+    if (pathToTexture != "")
+        {
+            texture.loadFromFile(pathToTexture);
+        }
     numberOfFrames = numberOfFrames_;
-    widthOfFrame = widthOfFrame_;
+    widthOfFrame = texture.getSize().x / (numberOfFrames);
     looping = looping_;
     statesMap = statesMap_;
 }
