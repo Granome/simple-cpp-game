@@ -18,5 +18,4 @@ private:
 public:
     Game();
     void start();
-    void hello();
 };
