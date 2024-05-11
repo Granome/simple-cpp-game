@@ -6,6 +6,8 @@
 #include <iostream>
 #include <cmath>
 
+#include "Player.hpp"
+
 class Game
 {
 private:
@@ -18,4 +20,5 @@ private:
 public:
     Game();
     void start();
+    void update();
 };
