@@ -2,6 +2,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <map>
+#include <vector>
 
 class Animation
 {
@@ -9,9 +10,18 @@ public:
     sf::Texture texture;
     int numberOfFrames;
     int widthOfFrame;
-    std::map<std::string, int> statesMap;
-    bool looping;
+    std::vector<AnimationState> animationStates;
 
-    Animation(std::string pathToTexture, int numberOfFrames_, bool looping_, std::map<std::string, int> statesMap_){}
+    Animation(std::string pathToTexture="", int numberOfFrames_=1, bool looping_=true, std::vector<AnimationState> animationStates_={}){}
 
+};
+
+class AnimationState
+{
+public:
+    std::string stateName;
+    int numberOfFrames;
+    bool loopable;
+public:
+    AnimationState(std::string stateName_="idle", int numberOfFrames_ = 1, bool loopable_ = true);
 };

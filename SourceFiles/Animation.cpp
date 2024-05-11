@@ -1,6 +1,6 @@
 #include <Animation.hpp>
 
-Animation::Animation(std::string pathToTexture="", int numberOfFrames_=1, bool looping_=true, std::map<std::string, int> statesMap_={})
+Animation::Animation(std::string pathToTexture="", int numberOfFrames_=1, bool looping_=true, std::vector<AnimationState> animationStates_={})
 {
     if (pathToTexture != "")
         {
@@ -8,6 +8,12 @@ Animation::Animation(std::string pathToTexture="", int numberOfFrames_=1, bool l
         }
     numberOfFrames = numberOfFrames_;
     widthOfFrame = texture.getSize().x / (numberOfFrames);
-    looping = looping_;
-    statesMap = statesMap_;
+    animationStates = animationStates_;
+}
+
+AnimationState::AnimationState(std::string stateName_="idle", int numberOfFrames_ = 1, bool loopable_ = true)
+{
+    stateName = stateName_;
+    numberOfFrames = numberOfFrames_;
+    loopable = loopable_;
 }
