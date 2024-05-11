@@ -7,18 +7,18 @@
 class Collider
 {
 protected:
-    sf::FloatRect bounds;
+    sf::FloatRect bounds; 
 
 public:
-    Collider(sf::FloatRect _bounds) {}
+    Collider(sf::FloatRect _bounds); 
 
     virtual ~Collider() = default;
 
-    sf::FloatRect getBounds(){}
+    sf::FloatRect getBounds();
 
-    void setBounds(sf::FloatRect _bounds){}
+    void setBounds(sf::FloatRect _bounds);
 
 
-    bool checkCollision(Collider otherCollider){}  // AABB algorithm for 2D collision detection
+    bool checkCollision(Collider otherCollider); // AABB algorithm for 2D collision detection
         
 };

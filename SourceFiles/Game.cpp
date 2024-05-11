@@ -1,10 +1,10 @@
-#include <Game.hpp>
+#include "Game.hpp"
 
 Game::Game(){}
 
 void Game::start()
 {
-// create the window
+
     srand((unsigned) time(NULL));
     sf::RenderWindow window(sf::VideoMode(800, 800), "Random shapes grid");
     window.clear(sf::Color::Black);
@@ -57,4 +57,9 @@ void Game::start()
 
     }
 
+}
+
+void Game::hello()
+{
+    std::cout << "HELLO?";
 }

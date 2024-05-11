@@ -1,6 +1,6 @@
-#include <AnimatedSprite.hpp>
+#include "AnimatedSprite.hpp"
 
-AnimatedSprite::AnimatedSprite(float fps_ = 1, std::string current_state="idle")
+AnimatedSprite::AnimatedSprite(float fps_, std::string current_state)
     {
         fps = fps_;
         _current_state = current_state;

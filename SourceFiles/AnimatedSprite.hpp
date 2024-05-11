@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <memory>
-#include <Animation.hpp>
+#include "Animation.hpp"
 
 class AnimatedSprite : public sf::Sprite
 {
@@ -18,15 +18,15 @@ private:
     Animation animation;
 
 public:
-    AnimatedSprite(float fps_ = 1, std::string current_state="idle"){}
+    AnimatedSprite(float fps_ = 1, std::string current_state="idle");
 
 
-    void animate(sf::Time &elapsed){}
+    void animate(sf::Time &elapsed);
 
-    void setAnimation(Animation animation_){}
+    void setAnimation(Animation animation_);
 
-    void setFps(float fps_){}
+    void setFps(float fps_);
 
-    void changeAnimationState(std::string new_state){}
+    void changeAnimationState(std::string new_state);
 
 };

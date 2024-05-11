@@ -1,11 +1,11 @@
-#include <Collider.hpp>
+#include "Collider.hpp"
 
 Collider::Collider(sf::FloatRect _bounds)
 {
     bounds = _bounds;
 }
 
-sf::FloatRect Collider::getBounds()
+sf::FloatRect Collider::getBounds() 
 {
     return bounds;
 }

@@ -1,6 +1,6 @@
-#include <Animation.hpp>
+#include "Animation.hpp"
 
-Animation::Animation(std::string pathToTexture="", int numberOfFrames_=1, bool looping_=true, std::vector<AnimationState> animationStates_={})
+Animation::Animation(std::string pathToTexture, int numberOfFrames_, bool looping_, std::vector<AnimationState> animationStates_)
 {
     if (pathToTexture != "")
         {
@@ -11,7 +11,7 @@ Animation::Animation(std::string pathToTexture="", int numberOfFrames_=1, bool l
     animationStates = animationStates_;
 }
 
-AnimationState::AnimationState(std::string stateName_="idle", int numberOfFrames_ = 1, bool loopable_ = true)
+AnimationState::AnimationState(std::string stateName_, int numberOfFrames_, bool loopable_)
 {
     stateName = stateName_;
     numberOfFrames = numberOfFrames_;
