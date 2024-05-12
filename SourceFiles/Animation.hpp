@@ -24,6 +24,6 @@ public:
     int widthOfFrame;
     std::vector<AnimationState> animationStates;
 
-    Animation(std::string pathToTexture="", int numberOfFrames_=1, bool looping_=true, std::vector<AnimationState> animationStates_={});
+    Animation(std::string pathToTexture="", int numberOfFrames_=1, std::vector<AnimationState> animationStates_={});
 
 };

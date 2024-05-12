@@ -64,6 +64,7 @@ void AnimatedSprite::animate(sf::Time &elapsed)
 void AnimatedSprite::setAnimation(Animation animation_)
 {
     animation = animation_;
+    this->setTexture(animation.texture);
     this->setTextureRect(sf::IntRect(0, 0, animation.texture.getSize().x / animation.numberOfFrames,  animation.texture.getSize().y));
 
 }
@@ -75,11 +76,16 @@ void AnimatedSprite::setFps(float fps_)
 
 void AnimatedSprite::changeAnimationState(std::string new_state)
 {
-    for (auto state : animation.animationStates)
+    if (_current_state != new_state)
     {
-        if (state.loopable) // unloopable animations cant be interrupted
+        for (auto state : animation.animationStates)
         {
-            _current_state = new_state;
+            if (state.loopable) // unloopable animations cant be interrupted
+            {
+                _current_state = new_state;
+                currentFrame = 0;
+                timeSinceLastFrame=0.8/fps; //sloght delay after state change, so character does not "shake"
+            }
         }
     }
 }

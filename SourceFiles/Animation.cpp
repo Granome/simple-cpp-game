@@ -1,6 +1,6 @@
 #include "Animation.hpp"
 
-Animation::Animation(std::string pathToTexture, int numberOfFrames_, bool looping_, std::vector<AnimationState> animationStates_)
+Animation::Animation(std::string pathToTexture, int numberOfFrames_, std::vector<AnimationState> animationStates_)
 {
     if (pathToTexture != "")
         {
