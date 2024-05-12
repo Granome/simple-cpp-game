@@ -7,6 +7,7 @@
 #include <cmath>
 
 #include "Player.hpp"
+#include "EnemyTypes.hpp"
 
 class Game
 {
@@ -15,6 +16,10 @@ private:
     int currentDifficulty;
     double totalTime;
     float timeScale;
+    sf::RenderWindow window;
+    sf::Clock clock;
+
+
     void GameLoop();
     void DrawFrame();
 public:
