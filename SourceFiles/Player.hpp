@@ -15,11 +15,14 @@ private:
     std::vector<float> bullets={0}; // vector consists of angles. For example 0 - bullet forward, 180 - bullet backwards
     bool bulletPenetration=false;
 
+    
+
 public:
     Player();
     void shoot();
     void death();
     void takeDamage(double damage_);
     void addBullet(float angle=0);
+    float getMovementSpeed();
     double getCurrentHP();
 };
