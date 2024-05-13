@@ -9,6 +9,12 @@ void Game::start()
 {
 
     window.clear(sf::Color::Black);
+    window.setFramerateLimit(200);
+
+    Player player;
+    
+
+    gameObjects.emplace_back(std::make_unique<Player>(player));
 
 
     RectEnemy enemy1;
@@ -26,11 +32,15 @@ void Game::start()
 void Game::update()
 {
 
-    sf::Time elapsed = clock.restart();
+
 
 
     while (window.isOpen()) 
     {
+        sf::Time elapsed = clock.restart();
+
+
+
 
         sf::Event event;
         while (window.pollEvent(event)) 
@@ -39,16 +49,18 @@ void Game::update()
                 window.close();
         }
 
+        
+        movementManager.drawGameObjects(gameObjects, elapsed, timeScale);
+        
+
+
+
+
+        window.clear(sf::Color::Black);
+
+
         for (const auto& gameObject : gameObjects)
         {
-            if (Player* p = dynamic_cast<Player*>(gameObject.get()))
-            {
-                
-            }
-            else
-            {
-
-            }
             window.draw(*gameObject);
         }
 
