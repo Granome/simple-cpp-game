@@ -24,3 +24,10 @@ void Enemy::death()
    
 }
 
+
+float Enemy::findDistanceToPlayer(sf::Vector2f playerPos)
+{
+   sf::Vector2f position =  this->getPosition();
+   return sqrt((playerPos.x - position.x)*(playerPos.x - position.x)+(playerPos.y - position.y)*(playerPos.y - position.y));
+}
+
