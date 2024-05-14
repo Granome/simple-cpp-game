@@ -19,6 +19,7 @@ private:
     double totalTime;
     float timeScale=1;
     sf::RenderWindow window;
+    sf::Vector2f windowCentre;
     sf::Clock clock;
     InputManager inputManager; // not used yet
     MovementManager movementManager;
@@ -30,4 +31,5 @@ public:
     Game();
     void start();
     void update();
+    sf::Vector2f findWindowCentre(sf::RenderWindow& window);
 };

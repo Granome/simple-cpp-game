@@ -10,9 +10,13 @@ void Game::start()
 
     window.clear(sf::Color::Black);
     window.setFramerateLimit(200);
+    windowCentre = findWindowCentre(window);
+    
 
     Player player;
     
+    player.setPosition(static_cast<sf::Vector2f>(windowCentre));
+    player.move(-player.getGlobalBounds().width/2, -player.getGlobalBounds().height/2);
 
     gameObjects.emplace_back(std::make_unique<Player>(player));
 
@@ -47,6 +51,7 @@ void Game::update()
         {
             if (event.type == sf::Event::Closed)
                 window.close();
+
         }
 
         
@@ -68,4 +73,9 @@ void Game::update()
     }
 }
 
+
+sf::Vector2f Game::findWindowCentre(sf::RenderWindow& window)
+{
+    return sf::Vector2f(window.getSize().x/2, window.getSize().y/2);
+}
 
