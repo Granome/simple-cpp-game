@@ -37,3 +37,16 @@ void MovementManager::drawGameObjects(std::vector<std::unique_ptr<sf::Drawable>>
         }
     }
 }
+
+void MovementManager::moveEnemies(std::vector<std::unique_ptr<sf::Drawable>>& gameObjects, sf::Time elapsed, const float& timeScale, sf::Vector2f playerPos)
+{
+    elapsed *= timeScale;
+
+    for (const auto& gameObject : gameObjects)
+    {
+        if (Enemy* m = dynamic_cast<Enemy*>(gameObject.get()))
+        {
+            m->moveTowardsPlayer(playerPos, elapsed);
+        }
+    }
+}

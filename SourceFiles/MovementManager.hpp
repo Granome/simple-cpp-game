@@ -26,5 +26,6 @@ private:
 public:
     //Moves and  animates all objects, depending on time scale
     void drawGameObjects(std::vector<std::unique_ptr<sf::Drawable>>& gameObjects, sf::Time elapsed, const float& timeScale);
-    
+    //Moves enemies towards the player
+    void moveEnemies(std::vector<std::unique_ptr<sf::Drawable>>& gameObjects, sf::Time elapsed, const float& timeScale, sf::Vector2f playerPos);
 };

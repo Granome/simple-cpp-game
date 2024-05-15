@@ -1,6 +1,7 @@
 #pragma once
 
 #include "AnimatedSprite.hpp"
+#include <iostream>
 
 class Player : public AnimatedSprite
 {

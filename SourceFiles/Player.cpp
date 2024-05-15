@@ -31,7 +31,7 @@ void Player::takeDamage(double damage)
 }
 void Player::death()
 {
-    
+    std::cout << "DEATH";
 }
 
 float Player::getMovementSpeed()

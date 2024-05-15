@@ -56,8 +56,8 @@ void Game::update()
 
         
         movementManager.drawGameObjects(gameObjects, elapsed, timeScale);
-        
-
+        movementManager.moveEnemies(gameObjects, elapsed, timeScale, windowCentre);
+        checkEnemyAttacks();
 
 
 
@@ -79,3 +79,20 @@ sf::Vector2f Game::findWindowCentre(sf::RenderWindow& window)
     return sf::Vector2f(window.getSize().x/2, window.getSize().y/2);
 }
 
+
+void Game::checkEnemyAttacks()
+{
+    Player* player;
+    // Player always has to be before enemies in vector of game objects
+    for (const auto& gameObject : gameObjects)
+    {
+        if (Player* p = dynamic_cast<Player*>(gameObject.get()))
+        {
+            player = p;
+        }
+        else if (Enemy* enemy = dynamic_cast<Enemy*>(gameObject.get()))
+        {
+            enemy->attack(*player);
+        }
+    }
+}

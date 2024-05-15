@@ -31,5 +31,6 @@ public:
     Game();
     void start();
     void update();
+    void checkEnemyAttacks();
     sf::Vector2f findWindowCentre(sf::RenderWindow& window);
 };
