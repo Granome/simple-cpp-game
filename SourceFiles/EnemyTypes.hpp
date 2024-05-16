@@ -10,9 +10,9 @@ public:
     RectEnemy() : Enemy(60, 30, 20, 40, 1)
     {
         
-        tx.loadFromFile("..\\Resourses\\Textures\\wall.png");
+        tx.loadFromFile("..\\Resourses\\Animations\\character.png");
         this->setTexture(tx);
-        this->setScale(0.2, 0.2);
+        this->setScale(1, 1);
         
     }
 };

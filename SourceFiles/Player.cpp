@@ -2,11 +2,14 @@
 
 Player::Player()
 {
-    AnimationState idle("idle", 3, true);
-    AnimationState running("running", 6, true);
+    AnimationState idle("idle", 4, true);
+    AnimationState idle_left("idle_left", 4, true);
+    AnimationState idle_right("idle_right", 4, true);
+    AnimationState idle_forward("idle_forward", 4, true);
+
     this->setPosition(300, 300);
     this->changeAnimationState("idle");
-    Animation animation("..\\Resourses\\Animations\\character.png", 9, {idle, running});
+    Animation animation("..\\Resourses\\Animations\\player.png", 16, {idle, idle_left, idle_right, idle_forward});
     this->setAnimation(animation);
     this->setFps(5);
 }

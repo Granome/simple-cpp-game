@@ -11,6 +11,10 @@ void Game::start()
     window.clear(sf::Color::Black);
     window.setFramerateLimit(200);
     windowCentre = findWindowCentre(window);
+
+    Background background;
+    background.fillTheWindow(window.getSize());
+    gameObjects.emplace_back(std::make_unique<Background>(background));
     
 
     Player player;
@@ -37,8 +41,6 @@ void Game::update()
 {
 
 
-
-
     while (window.isOpen()) 
     {
         sf::Time elapsed = clock.restart();
@@ -57,6 +59,7 @@ void Game::update()
         
         movementManager.drawGameObjects(gameObjects, elapsed, timeScale);
         movementManager.moveEnemies(gameObjects, elapsed, timeScale, windowCentre);
+        movementManager.movePlayer(gameObjects, elapsed, timeScale);
         checkEnemyAttacks();
 
 
