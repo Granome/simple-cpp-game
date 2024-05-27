@@ -3,6 +3,17 @@
 #include "AnimatedSprite.hpp"
 #include <iostream>
 
+
+//Usage of enumurator
+enum PlayerFacing
+{
+    up,
+    down,
+    left,   
+    right
+};
+
+
 class Player : public AnimatedSprite
 {
 private:
@@ -15,7 +26,7 @@ private:
     int movementSpeed=100;
     std::vector<float> bullets={0}; // vector consists of angles. For example 0 - bullet forward, 180 - bullet backwards
     bool bulletPenetration=false;
-
+    PlayerFacing facing = down;
     
 
 public:
@@ -26,4 +37,9 @@ public:
     void addBullet(float angle=0);
     float getMovementSpeed();
     double getCurrentHP();
+    void setFacing(PlayerFacing newFacing);
+    PlayerFacing getFacing();
+    void addBeard();
 };
+
+

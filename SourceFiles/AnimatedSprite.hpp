@@ -25,8 +25,10 @@ public:
 
     void setAnimation(Animation animation_);
 
+    Animation getAnimation();
+
     void setFps(float fps_);
 
-    void changeAnimationState(std::string new_state);
+    virtual void changeAnimationState(std::string new_state);
 
 };

@@ -21,6 +21,7 @@ void Game::start()
     
     player.setPosition(static_cast<sf::Vector2f>(windowCentre));
     player.move(-player.getGlobalBounds().width/2, -player.getGlobalBounds().height/2);
+    player.addBeard();
 
     gameObjects.emplace_back(std::make_unique<Player>(player));
 

@@ -14,15 +14,54 @@ void MovementManager::drawGameObjects(std::vector<std::unique_ptr<sf::Drawable>>
 
         if (Player* p = dynamic_cast<Player*>(gameObject.get()))
         {
+            //facing management
+            //Horizontal facing is prioritized, so if player goes diagonaly, character will face horizontally 
+            if (movementVector.x == -1)
+            {
+                p->setFacing(right);
+            }
+            else if (movementVector.x == 1)
+            {
+                p->setFacing(left);
+            }
+            else if (movementVector.y == 1)
+            {
+                p->setFacing(up);
+            }
+            else if (movementVector.y == -1)
+            {
+                p->setFacing(down);
+            }
+
+            std::string facingStr;
+            //convert facing to string
+            switch (p->getFacing())
+            {
+                case 0:
+                    facingStr = "_up";
+                    break;
+                case 1:
+                    facingStr = "_down";
+                    break;
+                case 2:
+                    facingStr = "_left";
+                    break;
+                case 3:
+                    facingStr = "_right";
+                    break;
+            }
+
 
             if(movementVector == sf::Vector2f(0, 0))
             {
-                p->changeAnimationState("idle");
+                p->changeAnimationState("idle"+facingStr);
             }
             else
             {
-                p->changeAnimationState("idle_right");
+                p->changeAnimationState("move"+facingStr);
+                
             }
+
             p->animate(elapsed);
 
         }

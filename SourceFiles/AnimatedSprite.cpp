@@ -69,6 +69,13 @@ void AnimatedSprite::setAnimation(Animation animation_)
 
 }
 
+
+Animation AnimatedSprite::getAnimation()
+{
+    return animation;
+}
+
+
 void AnimatedSprite::setFps(float fps_)
 {
     fps = fps_;
