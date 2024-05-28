@@ -1,4 +1,6 @@
 #include "Player.hpp"
+#include "Enemy.hpp"
+#include "cmath"
 
 Player::Player()
 {
@@ -102,4 +104,68 @@ void Player::addBeard()
     Animation newAnimation = getAnimation();
     newAnimation.texture = newTexture;
     this->setAnimation(newAnimation);
+}
+
+sf::Vector2f Player::findClosestEnemy(const std::vector<std::unique_ptr<sf::Drawable>>& gameObjects)
+{
+    //finding centre of player
+    sf::FloatRect playerBounds= getGlobalBounds();
+    sf::Vector2f playerPos = sf::Vector2f(playerBounds.left + playerBounds.width/2, playerBounds.top + playerBounds.height/2);
+    for (const auto& gameObject : gameObjects)
+    {
+        if (Enemy* enemy = dynamic_cast<Enemy*>(gameObject.get()))
+        {
+            //finding centre of enemy
+            sf::FloatRect enemyBounds= enemy->getGlobalBounds();
+            sf::Vector2f enemyPos = sf::Vector2f(playerBounds.left + playerBounds.width/2, playerBounds.top + playerBounds.height/2);
+            
+            if(findDistance(playerPos, positionOfClosestEnemy) > findDistance(playerPos, enemyPos))
+            {
+                positionOfClosestEnemy = enemyPos;
+            }
+        }
+    }
+}
+
+float Player::findDistance(sf::Vector2f pos1, sf::Vector2f pos2)
+{
+    return sqrt(pow(pos1.x-pos2.x, 2)+pow(pos1.y-pos2.y, 2));
+}
+
+
+void Player::shoot()
+{
+    //finding shooting angle
+    sf::FloatRect playerBounds= getGlobalBounds();
+    sf::Vector2f playerPos = sf::Vector2f(playerBounds.left + playerBounds.width/2, playerBounds.top + playerBounds.height/2);
+    
+    double shootingAngle = calculate_angle(playerPos, positionOfClosestEnemy);
+
+    //spawning bullets and assigning their movement vectors and all the values
+    for (auto bullet : bullets)
+    {
+        //Finding unit vector based on angle
+        double bulletAngle = bullet + shootingAngle;
+         
+    }
+
+}
+
+
+double Player::calculate_angle(sf::Vector2f pos1, sf::Vector2f pos2) 
+{
+
+    double dx = pos2.x - pos1.x;
+
+    double dy = pos2.y - pos1.y;
+
+    double angle_in_radians = atan2(dy, dx);
+
+    double angle_in_degrees = angle_in_radians * 180.0 / 3.14159265;
+
+    if (angle_in_degrees < 0) {
+        angle_in_degrees += 360;
+    }
+
+    return angle_in_degrees;
 }

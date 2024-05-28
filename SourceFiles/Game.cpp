@@ -96,6 +96,7 @@ void Game::checkEnemyAttacks()
         }
         else if (Enemy* enemy = dynamic_cast<Enemy*>(gameObject.get()))
         {
+            
             enemy->attack(*player);
         }
     }
