@@ -1,7 +1,7 @@
 #include "Enemy.hpp"
 
 Enemy::Enemy(double maxHP_, double movementSpeed_,
-       int attackRange_, double damagePerHit_, float attackSpeed_) : Collider(getBounds())
+       int attackRange_, double damagePerHit_, float attackSpeed_) : Collider(getGlobalBounds())
    {
       maxHP = maxHP_;
       currentHP = maxHP;

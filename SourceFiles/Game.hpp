@@ -32,5 +32,7 @@ public:
     void start();
     void update();
     void checkEnemyAttacks();
+    void handleShooting(sf::Time elapsed);
     sf::Vector2f findWindowCentre(sf::RenderWindow& window);
+    void checkBulletHits();
 };

@@ -1,4 +1,5 @@
 #include "MovementManager.hpp"
+#include <memory>
 
 void MovementManager::drawGameObjects(std::vector<std::unique_ptr<sf::Drawable>>& gameObjects, sf::Time elapsed, const float& timeScale)
 {
@@ -8,11 +9,11 @@ void MovementManager::drawGameObjects(std::vector<std::unique_ptr<sf::Drawable>>
     
     elapsed *= timeScale;
 
-    for (const auto& gameObject : gameObjects)
+    for (auto it = gameObjects.begin(); it != gameObjects.end(); ) {
     {
         
 
-        if (Player* p = dynamic_cast<Player*>(gameObject.get()))
+        if (Player* p = dynamic_cast<Player*>(it->get()))
         {
             //facing management
             //Horizontal facing is prioritized, so if player goes diagonaly, character will face horizontally 
@@ -66,11 +67,26 @@ void MovementManager::drawGameObjects(std::vector<std::unique_ptr<sf::Drawable>>
 
         }
 
-        else
+        else if (Enemy* enemy = dynamic_cast<Enemy*>(it->get()))
         {
-            sf::Sprite* s = dynamic_cast<sf::Sprite*>(gameObject.get());
+            enemy->changeAnimationState("move");
+            //TODO: ANIMATIONS
+            //Add facing for enemies, flip texture by multip. x of scale by -1.0
         }
+
+        else if (Bullet* bullet = dynamic_cast<Bullet*>(it->get()))
+        {
+            bullet->animate(elapsed);
+            if (bullet->getAnimationState() == "idle" && bullet->exploading)
+            {
+                it = gameObjects.erase(it);
+                continue;
+            }
+        }
+        ++it;
+        
     }
+}
 }
 
 
@@ -99,9 +115,14 @@ void MovementManager::movePlayer(std::vector<std::unique_ptr<sf::Drawable>>& gam
             bg->updateTexturePositions(movementVector.x * elapsed.asSeconds() * currentPlayerSpeed, movementVector.y * elapsed.asSeconds() * currentPlayerSpeed);
         }
 
-        if (Enemy* enemy = dynamic_cast<Enemy*>(gameObject.get()))
+        else if (Enemy* enemy = dynamic_cast<Enemy*>(gameObject.get()))
         {
             enemy->move(movementVector * elapsed.asSeconds() * currentPlayerSpeed);
+        }
+
+        else if (Bullet* b = dynamic_cast<Bullet*>(gameObject.get()))
+        {
+            b->move(movementVector * elapsed.asSeconds() * currentPlayerSpeed);
         }
     }
 
@@ -120,3 +141,21 @@ void MovementManager::moveEnemies(std::vector<std::unique_ptr<sf::Drawable>>& ga
         }
     }
 }
+
+void MovementManager::moveBullets(std::vector<std::unique_ptr<sf::Drawable>>& gameObjects, sf::Time elapsed, const float& timeScale)
+{
+    
+    elapsed *= timeScale;
+
+    for (const auto& gameObject : gameObjects)
+    {
+        if (Bullet* b = dynamic_cast<Bullet*>(gameObject.get()))
+        {
+            b->moveBullet(elapsed);
+        }
+    }
+
+}
+
+
+

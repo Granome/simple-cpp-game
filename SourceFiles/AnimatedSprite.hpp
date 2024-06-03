@@ -29,6 +29,8 @@ public:
 
     void setFps(float fps_);
 
+    std::string getAnimationState();
+
     virtual void changeAnimationState(std::string new_state);
 
 };

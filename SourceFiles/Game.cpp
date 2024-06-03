@@ -31,6 +31,12 @@ void Game::start()
 
     gameObjects.emplace_back(std::make_unique<Enemy>(enemy1));
 
+    Bat bat1;
+    bat1.setPosition(600, 400);
+    gameObjects.emplace_back(std::make_unique<Enemy>(bat1));
+
+
+
     update();
 
     
@@ -61,7 +67,11 @@ void Game::update()
         movementManager.drawGameObjects(gameObjects, elapsed, timeScale);
         movementManager.moveEnemies(gameObjects, elapsed, timeScale, windowCentre);
         movementManager.movePlayer(gameObjects, elapsed, timeScale);
+        movementManager.moveBullets(gameObjects, elapsed, timeScale);
+
         checkEnemyAttacks();
+        handleShooting(elapsed*timeScale);
+        checkBulletHits();
 
 
 
@@ -100,4 +110,49 @@ void Game::checkEnemyAttacks()
             enemy->attack(*player);
         }
     }
+}
+
+void Game::handleShooting(sf::Time elapsed)
+{
+    for (const auto& gameObject : gameObjects)
+    {
+        if (!gameObject)
+        {
+            std::cerr << "Null pointer found in gameObjects" << std::endl;
+            continue;
+        }
+        if (Player* p = dynamic_cast<Player*>(gameObject.get()))
+        {
+            p->findClosestEnemy(gameObjects);
+            p->shoot(gameObjects, elapsed);
+            return;
+        }
+
+    }
+}
+
+void Game::checkBulletHits()
+{
+    for (const auto& gameObject : gameObjects)
+    {
+        if (Bullet* b = dynamic_cast<Bullet*>(gameObject.get()))
+        {
+            b->setBounds(b->getGlobalBounds()); // updating collider bounds
+
+            for (const auto& gameObject2 : gameObjects)
+            {
+                if (Enemy* e = dynamic_cast<Enemy*>(gameObject2.get()))
+                {
+                    Collider& enemyCollider = *e;
+                    enemyCollider.setBounds(e->getGlobalBounds()); // updating collider bounds
+                    //std::cout << b->getGlobalBounds().left << std::endl;;
+                    if (b->checkCollision(enemyCollider))
+                    {
+                        e->takeDamage(b->getDamage());
+                        b->blowUp();
+                    }
+                }
+            } 
+        }
+    } 
 }

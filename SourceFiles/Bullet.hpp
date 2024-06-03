@@ -6,7 +6,8 @@
 #include "AnimatedSprite.hpp"
 #include "Collider.hpp"
 
-Animation bulletAnimation;
+
+
 
 class Bullet : public AnimatedSprite, public Collider
 {
@@ -14,20 +15,21 @@ private:
     float damage_;
     float criticalHitChance_;
     float criticalDamageCoefficient_;
-    int movementSpeed_;
+    float movementSpeed_;
     float maxFlightDistance_;
     float currentFightDistance_=0;
     sf::Vector2f movementUnitVector_;
+
 public:
+    bool exploading = false;
+
+    
     Bullet(float damage, float criticalHitChance,float criticalDamageCoefficient, 
-    int movementSpeed, float maxFlightDistance, sf::Vector2f movementUnitVector) : Collider(getBounds())
-    {
-        damage_ = damage;
-        criticalHitChance_ = criticalHitChance;
-        criticalDamageCoefficient_= criticalDamageCoefficient;
-        movementSpeed_ = movementSpeed;
-        maxFlightDistance_ = maxFlightDistance;
-        movementUnitVector_ = movementUnitVector;
-        setAnimation(bulletAnimation);
-    }
+    int movementSpeed, float maxFlightDistance, sf::Vector2f movementUnitVector);
+
+    void moveBullet(sf::Time elapsed);
+
+    float getDamage();
+
+    void blowUp();
 };

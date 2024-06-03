@@ -75,6 +75,11 @@ Animation AnimatedSprite::getAnimation()
     return animation;
 }
 
+std::string AnimatedSprite::getAnimationState()
+{
+    return _current_state;
+}
+
 
 void AnimatedSprite::setFps(float fps_)
 {

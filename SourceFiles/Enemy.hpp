@@ -5,7 +5,7 @@
 #include "Player.hpp"
 #include <cmath>
 
-class Enemy : public AnimatedSprite, Collider
+class Enemy : public AnimatedSprite, public Collider
 {
 protected:
     double maxHP;

@@ -1,4 +1,5 @@
 #include "Player.hpp"
+#include "Bullet.hpp"
 #include "Enemy.hpp"
 #include "cmath"
 
@@ -111,20 +112,26 @@ sf::Vector2f Player::findClosestEnemy(const std::vector<std::unique_ptr<sf::Draw
     //finding centre of player
     sf::FloatRect playerBounds= getGlobalBounds();
     sf::Vector2f playerPos = sf::Vector2f(playerBounds.left + playerBounds.width/2, playerBounds.top + playerBounds.height/2);
+    
+    sf::Vector2f closestEnemy(INFINITY, INFINITY);
+
     for (const auto& gameObject : gameObjects)
     {
         if (Enemy* enemy = dynamic_cast<Enemy*>(gameObject.get()))
         {
             //finding centre of enemy
             sf::FloatRect enemyBounds= enemy->getGlobalBounds();
-            sf::Vector2f enemyPos = sf::Vector2f(playerBounds.left + playerBounds.width/2, playerBounds.top + playerBounds.height/2);
+            sf::Vector2f enemyPos = sf::Vector2f(enemyBounds.left + enemyBounds.width/2, enemyBounds.top + enemyBounds.height/2);
             
-            if(findDistance(playerPos, positionOfClosestEnemy) > findDistance(playerPos, enemyPos))
+            if(findDistance(playerPos, closestEnemy) > findDistance(playerPos, enemyPos))
             {
-                positionOfClosestEnemy = enemyPos;
+                //std::cout << enemyPos.x << " " << enemyPos.y << std::endl;
+                closestEnemy = enemyPos;
             }
         }
     }
+    positionOfClosestEnemy = closestEnemy;
+    return closestEnemy;
 }
 
 float Player::findDistance(sf::Vector2f pos1, sf::Vector2f pos2)
@@ -133,22 +140,42 @@ float Player::findDistance(sf::Vector2f pos1, sf::Vector2f pos2)
 }
 
 
-void Player::shoot()
+void Player::shoot(std::vector<std::unique_ptr<sf::Drawable>>& gameObjects, sf::Time elapsed)
 {
-    //finding shooting angle
-    sf::FloatRect playerBounds= getGlobalBounds();
-    sf::Vector2f playerPos = sf::Vector2f(playerBounds.left + playerBounds.width/2, playerBounds.top + playerBounds.height/2);
-    
-    double shootingAngle = calculate_angle(playerPos, positionOfClosestEnemy);
-
-    //spawning bullets and assigning their movement vectors and all the values
-    for (auto bullet : bullets)
+    if (shotCooldown <= 0)
     {
-        //Finding unit vector based on angle
-        double bulletAngle = bullet + shootingAngle;
-         
-    }
 
+
+        // Finding shooting angle
+        sf::FloatRect playerBounds = getGlobalBounds();
+        sf::Vector2f playerPos(playerBounds.left + playerBounds.width / 2, playerBounds.top + playerBounds.height / 2);
+
+        double shootingAngle = calculate_angle(playerPos, positionOfClosestEnemy);
+        std::cout << positionOfClosestEnemy.x << " " << positionOfClosestEnemy.y << std::endl;
+
+        // Spawning bullets and assigning their movement vectors and all the values
+        for (auto bulletAngleOffset : bullets)
+        {
+            // Finding unit vector based on angle
+            double bulletAngle = bulletAngleOffset + shootingAngle;
+            sf::Vector2f movementVector(normalizeVector2(sf::Vector2f(cos(bulletAngle * 3.14159265 / 180.0), sin(bulletAngle * 3.14159265 / 180.0))));
+
+            std::cerr << "Bullet angle: " << bulletAngle << ", Movement vector: (" << movementVector.x << ", " << movementVector.y << ")" << std::endl;
+
+            // Creating bullet and adding it to the vector of game objects
+            auto bullet = std::make_unique<Bullet>(damage, criticalHitChance, criticalDamageCoefficient, bulletVelocity, bulletRange, movementVector);
+            bullet->setPosition(playerPos);
+            bullet->move(movementVector.x * 30, movementVector.y * 30);
+
+            gameObjects.emplace_back(std::move(bullet));
+        }
+
+        shotCooldown += 1.0f / attackSpeed;
+    }
+    else
+    {
+        shotCooldown -= elapsed.asSeconds();
+    }
 }
 
 
@@ -168,4 +195,13 @@ double Player::calculate_angle(sf::Vector2f pos1, sf::Vector2f pos2)
     }
 
     return angle_in_degrees;
+}
+
+sf::Vector2f Player::normalizeVector2(const sf::Vector2f& vector) 
+{
+    float magnitude = std::sqrt(vector.x * vector.x + vector.y * vector.y);
+    if (magnitude != 0)
+        return sf::Vector2f(vector.x / magnitude, vector.y / magnitude);
+    else
+        return sf::Vector2f(0.f, 0.f); // Return zero vector if magnitude is zero
 }
