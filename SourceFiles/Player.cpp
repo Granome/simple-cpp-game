@@ -151,7 +151,7 @@ void Player::shoot(std::vector<std::unique_ptr<sf::Drawable>>& gameObjects, sf::
         sf::Vector2f playerPos(playerBounds.left + playerBounds.width / 2, playerBounds.top + playerBounds.height / 2);
 
         double shootingAngle = calculate_angle(playerPos, positionOfClosestEnemy);
-        std::cout << positionOfClosestEnemy.x << " " << positionOfClosestEnemy.y << std::endl;
+        //std::cout << positionOfClosestEnemy.x << " " << positionOfClosestEnemy.y << std::endl;
 
         // Spawning bullets and assigning their movement vectors and all the values
         for (auto bulletAngleOffset : bullets)
@@ -160,7 +160,7 @@ void Player::shoot(std::vector<std::unique_ptr<sf::Drawable>>& gameObjects, sf::
             double bulletAngle = bulletAngleOffset + shootingAngle;
             sf::Vector2f movementVector(normalizeVector2(sf::Vector2f(cos(bulletAngle * 3.14159265 / 180.0), sin(bulletAngle * 3.14159265 / 180.0))));
 
-            std::cerr << "Bullet angle: " << bulletAngle << ", Movement vector: (" << movementVector.x << ", " << movementVector.y << ")" << std::endl;
+            //std::cerr << "Bullet angle: " << bulletAngle << ", Movement vector: (" << movementVector.x << ", " << movementVector.y << ")" << std::endl;
 
             // Creating bullet and adding it to the vector of game objects
             auto bullet = std::make_unique<Bullet>(damage, criticalHitChance, criticalDamageCoefficient, bulletVelocity, bulletRange, movementVector);

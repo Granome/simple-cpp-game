@@ -13,16 +13,24 @@ Enemy::Enemy(double maxHP_, double movementSpeed_,
 
 void Enemy::takeDamage(double damage_)
 {
-   currentHP -= damage_;
-   if (currentHP <= 0)
+   if (currentTakingDamageCooldown <= 0) // so it cantake damage only once per some period
    {
-      death();
+      currentHP -= damage_;
+      std::cout <<"here";
+      if (currentHP <= 0)
+      {
+         death();
+      }
+      currentTakingDamageCooldown = takingDamageCooldown;
    }
 }
 
 void Enemy::death()
 {
-   
+   changeAnimationState("death");
+   dying = true;
+   attackCooldown = 11111111;
+   movementSpeed = 2;
 }
 
 
@@ -46,9 +54,21 @@ sf::Vector2f Enemy::getUnitVectorToPlayer(sf::Vector2f playerPos)
 //this function runs on every frame
 void Enemy::moveTowardsPlayer(sf::Vector2f playerPos, sf::Time elapsed)
 {
+   sf::Vector2f movementVector;
    if (findDistanceToPlayer(playerPos) > attackRange)
    {
-      move(getUnitVectorToPlayer(playerPos) * elapsed.asSeconds() * movementSpeed);
+      movementVector = sf::Vector2f(getUnitVectorToPlayer(playerPos) * elapsed.asSeconds() * movementSpeed);
+      move(movementVector);
+   }
+
+   //managing facing
+   if (movementVector.x < 0)
+   {
+      facing = "left";
+   }
+   else
+   {
+      facing = "right";
    }
 
 
@@ -57,6 +77,8 @@ void Enemy::moveTowardsPlayer(sf::Vector2f playerPos, sf::Time elapsed)
    {
       attackCooldown = 0;
    }
+
+   currentTakingDamageCooldown -= elapsed.asSeconds();
 
 }
 
@@ -68,6 +90,7 @@ void Enemy::attack(Player& player)
          {
             player.takeDamage(damagePerHit);
             attackCooldown += 1.0/attackSpeed;
+            changeAnimationState("attack");
          }
       }
 }
@@ -75,4 +98,15 @@ void Enemy::attack(Player& player)
 float Enemy::getDistanceToPlayer()
 {
    return (distanceToPlayer);
+}
+
+
+std::string Enemy::getFacing()
+{
+   return facing;
+}
+
+void Enemy::setFacing(std::string newFacing)
+{
+   facing = newFacing;
 }

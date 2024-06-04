@@ -19,15 +19,15 @@ public:
     }
 };
 
-
+extern Animation batAnimation;
 class Bat : public Enemy
 {
 public:
-Animation batAnimation = Animation("..\\Resourses\\Animations\\bat.png", 23, {AnimationState("move", 4, true) ,AnimationState("attack", 7, false), AnimationState("hit", 5, false), AnimationState("death", 11, false)});
     Bat() : Enemy(50, 50, 20, 10, 1.2)
     {
+        changeAnimationState("idle");
         setAnimation(batAnimation);
-        setFps(4);
-        setScale(-1.0f, 1.0f);
+        setScale(1.4, 1.4);
+        setFps(8);
     }
 };
