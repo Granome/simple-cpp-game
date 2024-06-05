@@ -18,7 +18,7 @@ class Player : public AnimatedSprite
 {
 private:
     double maxHP=100;
-    double HP=100;
+    double HP=50;
     float attackSpeed=0.6;
     float damage=35;
     float criticalHitChance=0.1;
@@ -32,6 +32,10 @@ private:
     sf::Vector2f positionOfClosestEnemy;
     float shotCooldown=10;
 
+    int currentLVL=1;
+    int currentXP=0;
+    int xpForNextLevel=100;
+
 
     sf::Vector2f normalizeVector2(const sf::Vector2f& vector);
     
@@ -44,12 +48,20 @@ public:
     void addBullet(float angle=0);
     float getMovementSpeed();
     double getCurrentHP();
+    double getMaxHp();
+    int getCurrentXp();
+    int getCurrentLevel();
+    int getXpForNextLevel();
+
     void setFacing(PlayerFacing newFacing);
     PlayerFacing getFacing();
     void addBeard();
     float findDistance(sf::Vector2f pos1, sf::Vector2f pos2);
     sf::Vector2f findClosestEnemy(const std::vector<std::unique_ptr<sf::Drawable>>& gameObjects);
     double calculate_angle(sf::Vector2f pos1, sf::Vector2f pos2);
+    void calculateXPForNextLevel();
+    void levelUp();
+
 };
 
 

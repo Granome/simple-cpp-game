@@ -33,13 +33,9 @@ void Player::addBullet(float angle)
     bullets.emplace_back(angle);
 }
 
-double Player::getCurrentHP()
-{
-    return HP;
-}
-
 void Player::takeDamage(double damage)
 {
+
     HP -= damage;
     if (HP <= 0)
    {
@@ -197,6 +193,32 @@ double Player::calculate_angle(sf::Vector2f pos1, sf::Vector2f pos2)
     return angle_in_degrees;
 }
 
+double Player::getCurrentHP()
+{
+    return HP;
+}
+
+double Player::getMaxHp()
+{
+    return maxHP;
+}
+
+int Player::getCurrentXp()
+{
+    return currentXP;
+}
+
+int Player::getXpForNextLevel()
+{
+    return xpForNextLevel;
+}
+
+int Player::getCurrentLevel()
+{
+    return currentLVL;
+}
+
+
 sf::Vector2f Player::normalizeVector2(const sf::Vector2f& vector) 
 {
     float magnitude = std::sqrt(vector.x * vector.x + vector.y * vector.y);
@@ -204,4 +226,16 @@ sf::Vector2f Player::normalizeVector2(const sf::Vector2f& vector)
         return sf::Vector2f(vector.x / magnitude, vector.y / magnitude);
     else
         return sf::Vector2f(0.f, 0.f); // Return zero vector if magnitude is zero
+}
+
+
+void Player::calculateXPForNextLevel()
+{
+    xpForNextLevel = xpForNextLevel + currentLVL*100;
+}
+
+void Player::levelUp()
+{
+    currentLVL++;
+    calculateXPForNextLevel();
 }

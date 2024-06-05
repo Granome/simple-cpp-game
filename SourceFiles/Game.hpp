@@ -10,6 +10,8 @@
 #include "EnemyTypes.hpp"
 #include "InputManager.hpp"
 #include "MovementManager.hpp"
+#include "HealthBar.hpp"
+#include "XpBar.hpp"
 
 class Game
 {
@@ -35,4 +37,6 @@ public:
     void handleShooting(sf::Time elapsed);
     sf::Vector2f findWindowCentre(sf::RenderWindow& window);
     void checkBulletHits();
+    void updateHealthBar();
+    void updateXPBar();
 };

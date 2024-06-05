@@ -2,7 +2,7 @@
 
 Game::Game()
 {
-    window.create(sf::VideoMode(800, 600), "My window");
+    window.create(sf::VideoMode(800, 600), "The great Obliterator");
 }
 
 void Game::start()
@@ -33,6 +33,15 @@ void Game::start()
     gameObjects.emplace_back(std::make_unique<Enemy>(bat1));
 
 
+    
+
+
+    HealthBar healthBar(40, 510, 200, 20);
+    gameObjects.emplace_back(std::make_unique<HealthBar>(healthBar));
+
+    
+    XpBar xpBar(40, 550, 180, 15);
+    gameObjects.emplace_back(std::make_unique<XpBar>(xpBar));
 
     update();
 
@@ -69,6 +78,9 @@ void Game::update()
         checkEnemyAttacks();
         handleShooting(elapsed*timeScale);
         checkBulletHits();
+        updateHealthBar();
+        updateXPBar();
+
 
 
 
@@ -152,4 +164,58 @@ void Game::checkBulletHits()
             } 
         }
     } 
+}
+
+void Game::updateHealthBar()
+{
+    double currentHP;
+    double maxHP;
+    for (const auto& gameObject : gameObjects)
+    {
+        if (!gameObject)
+        {
+            std::cerr << "Null pointer found in gameObjects" << std::endl;
+            continue;
+        }
+        if (Player* p = dynamic_cast<Player*>(gameObject.get()))
+        {
+            currentHP = p->getCurrentHP();
+            maxHP = p->getMaxHp();
+        }
+        if (HealthBar* hb = dynamic_cast<HealthBar*>(gameObject.get()))
+        {
+            hb->update(currentHP, maxHP);
+
+        }
+
+    }
+}
+
+void Game::updateXPBar()
+{
+    double currentXP;
+    double XpforNextLevel;
+    int currentLVL;
+    for (const auto& gameObject : gameObjects)
+    {
+        if (!gameObject)
+        {
+            std::cerr << "Null pointer found in gameObjects" << std::endl;
+            continue;
+        }
+        if (Player* p = dynamic_cast<Player*>(gameObject.get()))
+        {
+            currentXP = p->getCurrentXp();
+            XpforNextLevel = p->getXpForNextLevel();
+            currentLVL = p->getCurrentLevel();
+
+        }
+        if (XpBar* xpb = dynamic_cast<XpBar*>(gameObject.get()))
+        {
+
+            xpb->update(currentXP, XpforNextLevel, currentLVL);
+
+        }
+
+    }
 }
