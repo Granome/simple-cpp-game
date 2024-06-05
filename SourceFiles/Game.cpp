@@ -26,13 +26,10 @@ void Game::start()
     gameObjects.emplace_back(std::make_unique<Player>(player));
 
 
-    RectEnemy enemy1;
-    enemy1.setPosition(0, 0);
 
-    gameObjects.emplace_back(std::make_unique<Enemy>(enemy1));
 
     Bat bat1;
-    bat1.setPosition(600, 400);
+    bat1.setPosition(100, 400);
     gameObjects.emplace_back(std::make_unique<Enemy>(bat1));
 
 

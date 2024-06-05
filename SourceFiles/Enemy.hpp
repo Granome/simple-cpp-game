@@ -23,7 +23,7 @@ protected:
     float currentTakingDamageCooldown = 0;
 
 
-    std::string facing;
+    std::string facing = "left";
 
 public:
     bool dying = false;

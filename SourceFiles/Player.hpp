@@ -30,7 +30,7 @@ private:
     float bulletRange=300; // maximum distance bullet can travel
     PlayerFacing facing = down;
     sf::Vector2f positionOfClosestEnemy;
-    float shotCooldown=2;
+    float shotCooldown=10;
 
 
     sf::Vector2f normalizeVector2(const sf::Vector2f& vector);

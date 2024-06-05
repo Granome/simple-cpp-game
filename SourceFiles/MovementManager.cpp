@@ -69,21 +69,24 @@ void MovementManager::drawGameObjects(std::vector<std::unique_ptr<sf::Drawable>>
 
         else if (Enemy* enemy = dynamic_cast<Enemy*>(it->get()))
         {
-            if(enemy->getAnimationState() == "idle")
+
+            //setting facing
+            if (enemy->getAnimationState() == "move_right" || enemy->getAnimationState() == "move_left")
             {
-                enemy->changeAnimationState("move");
+                enemy->changeAnimationState(std::string("move_") + enemy->getFacing());
             }
 
-
-            //facing 
-
-            if (enemy->getFacing() == "left")
+            //processing death anim
+            if (enemy->getAnimationState() == "idle" && enemy->dying)
             {
-                
+                it = gameObjects.erase(it);
+                continue;
             }
-            else
+
+            //setting movement anim after any other is finished
+            else if(enemy->getAnimationState() == "idle")
             {
-                
+                enemy->changeAnimationState(std::string("move_") + enemy->getFacing());
             }
 
 
@@ -91,11 +94,6 @@ void MovementManager::drawGameObjects(std::vector<std::unique_ptr<sf::Drawable>>
             //Add facing for enemies, flip texture by multip. x of scale by -1.0
             enemy->animate(elapsed);
 
-            if (enemy->getAnimationState() == "idle" && enemy->dying)
-            {
-                it = gameObjects.erase(it);
-                continue;
-            }
         }
 
         else if (Bullet* bullet = dynamic_cast<Bullet*>(it->get()))

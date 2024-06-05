@@ -16,7 +16,6 @@ void Enemy::takeDamage(double damage_)
    if (currentTakingDamageCooldown <= 0) // so it cantake damage only once per some period
    {
       currentHP -= damage_;
-      std::cout <<"here";
       if (currentHP <= 0)
       {
          death();
@@ -27,7 +26,7 @@ void Enemy::takeDamage(double damage_)
 
 void Enemy::death()
 {
-   changeAnimationState("death");
+   changeAnimationState(std::string("death") + "_" + facing);
    dying = true;
    attackCooldown = 11111111;
    movementSpeed = 2;
@@ -90,7 +89,7 @@ void Enemy::attack(Player& player)
          {
             player.takeDamage(damagePerHit);
             attackCooldown += 1.0/attackSpeed;
-            changeAnimationState("attack");
+            changeAnimationState(std::string("attack") + "_" + facing);
          }
       }
 }
