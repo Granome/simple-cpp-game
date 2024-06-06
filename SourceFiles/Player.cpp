@@ -103,6 +103,7 @@ void Player::addBeard()
     this->setAnimation(newAnimation);
 }
 
+
 sf::Vector2f Player::findClosestEnemy(const std::vector<std::unique_ptr<sf::Drawable>>& gameObjects)
 {
     //finding centre of player
@@ -203,20 +204,7 @@ double Player::getMaxHp()
     return maxHP;
 }
 
-int Player::getCurrentXp()
-{
-    return currentXP;
-}
 
-int Player::getXpForNextLevel()
-{
-    return xpForNextLevel;
-}
-
-int Player::getCurrentLevel()
-{
-    return currentLVL;
-}
 
 
 sf::Vector2f Player::normalizeVector2(const sf::Vector2f& vector) 
@@ -229,13 +217,3 @@ sf::Vector2f Player::normalizeVector2(const sf::Vector2f& vector)
 }
 
 
-void Player::calculateXPForNextLevel()
-{
-    xpForNextLevel = xpForNextLevel + currentLVL*100;
-}
-
-void Player::levelUp()
-{
-    currentLVL++;
-    calculateXPForNextLevel();
-}

@@ -25,16 +25,14 @@ private:
     float criticalDamageCoefficient=1.3;
     int movementSpeed=100;
     std::vector<float> bullets={0, 180}; // vector consists of angles. For example 0 - bullet forward, 180 - bullet backwards
-    bool bulletPenetration=true;
+    bool bulletPenetration=false;
     float bulletVelocity=140;
     float bulletRange=300; // maximum distance bullet can travel
     PlayerFacing facing = down;
     sf::Vector2f positionOfClosestEnemy;
     float shotCooldown=1;
 
-    int currentLVL=1;
-    int currentXP=0;
-    int xpForNextLevel=100;
+
 
 
     sf::Vector2f normalizeVector2(const sf::Vector2f& vector);
@@ -49,18 +47,17 @@ public:
     float getMovementSpeed();
     double getCurrentHP();
     double getMaxHp();
-    int getCurrentXp();
-    int getCurrentLevel();
-    int getXpForNextLevel();
+
 
     void setFacing(PlayerFacing newFacing);
     PlayerFacing getFacing();
     void addBeard();
+
     float findDistance(sf::Vector2f pos1, sf::Vector2f pos2);
     sf::Vector2f findClosestEnemy(const std::vector<std::unique_ptr<sf::Drawable>>& gameObjects);
     double calculate_angle(sf::Vector2f pos1, sf::Vector2f pos2);
-    void calculateXPForNextLevel();
-    void levelUp();
+
+
 
 };
 

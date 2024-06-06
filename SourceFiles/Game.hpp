@@ -13,12 +13,14 @@
 #include "MovementManager.hpp"
 #include "HealthBar.hpp"
 #include "XpBar.hpp"
+#include "EnemySpawner.hpp"
 
 class Game
 {
 private:
     std::vector<std::unique_ptr<sf::Drawable>> gameObjects;
-    int currentDifficulty;
+    std::vector<std::unique_ptr<sf::Drawable>> uiObjects;
+
     double totalTime;
     float timeScale=1;
     sf::RenderWindow window;
@@ -26,6 +28,8 @@ private:
     sf::Clock clock;
     InputManager inputManager; // not used yet
     MovementManager movementManager;
+    EnemySpawner enemySpawner;
+    int currentDifficultyPoints;
 
 
     void GameLoop();
@@ -39,5 +43,5 @@ public:
     sf::Vector2f findWindowCentre(sf::RenderWindow& window);
     void checkBulletHits();
     void updateHealthBar();
-    void updateXPBar();
+    void updateXPBar(EnemySpawner enemySpawner);
 };

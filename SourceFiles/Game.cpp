@@ -24,25 +24,27 @@ void Game::start()
     player.move(-player.getGlobalBounds().width/2, -player.getGlobalBounds().height/2);
     player.addBeard();
 
+    enemySpawner.setPlayerPosition(player.getPosition());
+
     gameObjects.emplace_back(std::make_unique<Player>(player));
 
 
 
 
-    Bat bat1;
-    bat1.setPosition(100, 400);
-    gameObjects.emplace_back(std::make_unique<Enemy>(bat1));
 
 
     
 
 
     HealthBar healthBar(40, 510, 200, 20);
-    gameObjects.emplace_back(std::make_unique<HealthBar>(healthBar));
+    uiObjects.emplace_back(std::make_unique<HealthBar>(healthBar));
 
     
     XpBar xpBar(40, 550, 180, 15);
-    gameObjects.emplace_back(std::make_unique<XpBar>(xpBar));
+    uiObjects.emplace_back(std::make_unique<XpBar>(xpBar));
+
+    enemySpawner.spawnEnemy(1, gameObjects);
+
 
     update();
 
@@ -80,7 +82,8 @@ void Game::update()
         handleShooting(elapsed*timeScale);
         checkBulletHits();
         updateHealthBar();
-        updateXPBar();
+        updateXPBar(enemySpawner);
+        enemySpawner.update(elapsed * timeScale, gameObjects);
 
 
 
@@ -91,6 +94,10 @@ void Game::update()
         for (const auto& gameObject : gameObjects)
         {
             window.draw(*gameObject);
+        }
+        for (const auto& uiObject : uiObjects)
+        {
+            window.draw(*uiObject);
         }
 
         window.display();
@@ -154,13 +161,13 @@ void Game::checkBulletHits()
                 if (Enemy* e = dynamic_cast<Enemy*>(gameObject2.get()))
                 {
                     Collider& enemyCollider = *e;
-                    enemyCollider.setBounds(e->getGlobalBounds()); // updating collider bounds
+                    enemyCollider.setBounds(sf::FloatRect(e->getGlobalBounds().left+e->getGlobalBounds().width/4, e->getGlobalBounds().top+e->getGlobalBounds().height/4, e->getGlobalBounds().width/2, e->getGlobalBounds().height/2)); // updating collider bounds
                     //std::cout << b->getGlobalBounds().left << std::endl;;
                     if (b->checkCollision(enemyCollider))
                     {
                         if (std::find(b->damagedEnemies.begin(), b->damagedEnemies.end(), e->getUID()) == b->damagedEnemies.end())
                         {
-                            e->takeDamage(b->getDamage());
+                            e->takeDamage(b->getDamage(), enemySpawner);
                             b->damagedEnemies.emplace_back(e->getUID());
                             if (!b->isPenetrating())
                             {
@@ -190,7 +197,10 @@ void Game::updateHealthBar()
             currentHP = p->getCurrentHP();
             maxHP = p->getMaxHp();
         }
-        if (HealthBar* hb = dynamic_cast<HealthBar*>(gameObject.get()))
+    }
+    for (const auto& uiObject : uiObjects)
+    {
+        if (HealthBar* hb = dynamic_cast<HealthBar*>(uiObject.get()))
         {
             hb->update(currentHP, maxHP);
 
@@ -199,26 +209,19 @@ void Game::updateHealthBar()
     }
 }
 
-void Game::updateXPBar()
+void Game::updateXPBar(EnemySpawner enemySpawner)
 {
-    double currentXP;
-    double XpforNextLevel;
-    int currentLVL;
-    for (const auto& gameObject : gameObjects)
+    double currentXP = enemySpawner.getCurrentXp();
+    double XpforNextLevel = enemySpawner.getXpForNextLevel();
+    int currentLVL = enemySpawner.getCurrentLevel();
+    for (const auto& uiObject : uiObjects)
     {
-        if (!gameObject)
+        if (!uiObject)
         {
             std::cerr << "Null pointer found in gameObjects" << std::endl;
             continue;
         }
-        if (Player* p = dynamic_cast<Player*>(gameObject.get()))
-        {
-            currentXP = p->getCurrentXp();
-            XpforNextLevel = p->getXpForNextLevel();
-            currentLVL = p->getCurrentLevel();
-
-        }
-        if (XpBar* xpb = dynamic_cast<XpBar*>(gameObject.get()))
+        if (XpBar* xpb = dynamic_cast<XpBar*>(uiObject.get()))
         {
 
             xpb->update(currentXP, XpforNextLevel, currentLVL);

@@ -1,7 +1,7 @@
 #include "Enemy.hpp"
 
 Enemy::Enemy(double maxHP_, double movementSpeed_,
-       int attackRange_, double damagePerHit_, float attackSpeed_) : Collider(getGlobalBounds())
+       int attackRange_, double damagePerHit_, float attackSpeed_, int xpDrop_) : Collider(sf::FloatRect(getGlobalBounds().left+getGlobalBounds().width/4, getGlobalBounds().top+getGlobalBounds().height/4, getGlobalBounds().width/2, getGlobalBounds().height/2))
    {
       maxHP = maxHP_;
       currentHP = maxHP;
@@ -9,29 +9,31 @@ Enemy::Enemy(double maxHP_, double movementSpeed_,
       attackRange = attackRange_;
       damagePerHit = damagePerHit_;
       attackSpeed = attackSpeed_;
+      xpDrop = xpDrop_;
 
       uid = generateUID();
    }
 
-void Enemy::takeDamage(double damage_)
+void Enemy::takeDamage(double damage_, EnemySpawner& enemySpawner)
 {
    if (currentTakingDamageCooldown <= 0) // so it cantake damage only once per some period
    {
       currentHP -= damage_;
       if (currentHP <= 0)
       {
-         death();
+         death(enemySpawner);
       }
       currentTakingDamageCooldown = takingDamageCooldown;
    }
 }
 
-void Enemy::death()
+void Enemy::death(EnemySpawner& enemySpawner)
 {
    changeAnimationState(std::string("death") + "_" + facing);
    dying = true;
    attackCooldown = 11111111;
    movementSpeed = 2;
+   enemySpawner.addXP(xpDrop);
 }
 
 
@@ -111,6 +113,12 @@ std::string Enemy::getFacing()
 uint64_t Enemy::getUID()
 {
    return uid;
+}
+
+
+int Enemy::getXpDrop()
+{
+   return xpDrop;
 }
 
 
