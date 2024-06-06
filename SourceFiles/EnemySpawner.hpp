@@ -20,6 +20,7 @@ private:
     std::vector<int> enemyDifficultyCost = 
     {
         1, //Bat
+        5, //Crab
 
     };
 

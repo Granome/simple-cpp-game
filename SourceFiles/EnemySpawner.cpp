@@ -5,6 +5,7 @@
 EnemySpawner::EnemySpawner(sf::Vector2f playerPosition)
 {
     playerPos = playerPosition;
+    srand((unsigned) time(NULL));
 }
 
 
@@ -23,6 +24,9 @@ void EnemySpawner::spawnEnemy(int enemyNumber, std::vector<std::unique_ptr<sf::D
 
             newEnemy = std::make_unique<Bat>();
             break;
+        case 1:
+            newEnemy = std::make_unique<Crab>();
+            break;
     }
     if (newEnemy)
     {
@@ -30,6 +34,7 @@ void EnemySpawner::spawnEnemy(int enemyNumber, std::vector<std::unique_ptr<sf::D
         gameObjects.emplace_back(std::move(newEnemy));
 
     }
+    std::cout << difficultyAccumulation << " " << currentDifficultyPoints << std::endl;
 
 
 }
@@ -37,11 +42,11 @@ void EnemySpawner::spawnEnemy(int enemyNumber, std::vector<std::unique_ptr<sf::D
 
 int randomInt(int min, int max) 
 {
-    srand((unsigned) time(NULL));
 
     if (max-min != 0)
     {
-        return rand()%(max-min)+min;
+        //std::cout << rand() % (max-min+1)+min << std::endl;
+        return rand()%((max-min)+min+1);
     }
     else
     {
@@ -52,8 +57,9 @@ int randomInt(int min, int max)
 }
 
 
-float toRadians(float degrees) {
-    return degrees * M_PI / 180.0f;
+float toRadians(float degrees) 
+{
+    return degrees * 3.14159265 / 180.0f;
 }
 
 sf::Vector2f EnemySpawner::findRandomPosition(sf::Vector2f playerPos, sf::Vector2f enemySpawnRange) {
@@ -76,7 +82,12 @@ sf::Vector2f EnemySpawner::findRandomPosition(sf::Vector2f playerPos, sf::Vector
 int EnemySpawner::chooseNextEnemy(int currentLevel)
 {
     unsigned int maxEnemy = currentLevel/3.0;
-    return randomInt(0, maxEnemy);
+    if (maxEnemy > (enemyDifficultyCost.size()-1))
+    {
+        maxEnemy = enemyDifficultyCost.size()-1;
+    }
+    nextEnemy = randomInt(0, maxEnemy);
+    return nextEnemy;
 }
 
 
@@ -88,8 +99,9 @@ void EnemySpawner::update(sf::Time elapsed, std::vector<std::unique_ptr<sf::Draw
     {
         currentDifficultyPoints -= enemyDifficultyCost[nextEnemy];
         spawnEnemy(nextEnemy, gameObjects);
+        std::cout << nextEnemy << std::endl;
         //std::cout << currentDifficultyPoints << std::endl;
-        chooseNextEnemy(0);
+        chooseNextEnemy(getCurrentLevel());
     }
 }
 
@@ -117,7 +129,7 @@ void EnemySpawner::calculateXPForNextLevel()
 void EnemySpawner::levelUp()
 {
     currentLVL++;
-    difficultyAccumulation *= 1.4;
+    difficultyAccumulation *= 1.2;
     calculateXPForNextLevel();
 }
 

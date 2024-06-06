@@ -43,7 +43,6 @@ void Game::start()
     XpBar xpBar(40, 550, 180, 15);
     uiObjects.emplace_back(std::make_unique<XpBar>(xpBar));
 
-    enemySpawner.spawnEnemy(1, gameObjects);
 
 
     update();
