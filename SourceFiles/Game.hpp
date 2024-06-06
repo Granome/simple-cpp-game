@@ -5,6 +5,7 @@
 #include <SFML/Window.hpp>
 #include <iostream>
 #include <cmath>
+#include <algorithm>
 
 #include "Player.hpp"
 #include "EnemyTypes.hpp"

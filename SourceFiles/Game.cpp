@@ -1,5 +1,6 @@
 #include "Game.hpp"
 
+
 Game::Game()
 {
     window.create(sf::VideoMode(800, 600), "The great Obliterator");
@@ -157,8 +158,15 @@ void Game::checkBulletHits()
                     //std::cout << b->getGlobalBounds().left << std::endl;;
                     if (b->checkCollision(enemyCollider))
                     {
-                        e->takeDamage(b->getDamage());
-                        b->blowUp();
+                        if (std::find(b->damagedEnemies.begin(), b->damagedEnemies.end(), e->getUID()) == b->damagedEnemies.end())
+                        {
+                            e->takeDamage(b->getDamage());
+                            b->damagedEnemies.emplace_back(e->getUID());
+                            if (!b->isPenetrating())
+                            {
+                                b->blowUp();
+                            }
+                        }
                     }
                 }
             } 

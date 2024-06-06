@@ -3,6 +3,8 @@
 #include "AnimatedSprite.hpp"
 #include "Collider.hpp"
 #include "Player.hpp"
+#include <random>
+#include <cstdint>
 #include <cmath>
 
 class Enemy : public AnimatedSprite, public Collider
@@ -19,11 +21,15 @@ protected:
 
     float distanceToPlayer;
 
-    float takingDamageCooldown = 1;
+    float takingDamageCooldown = 0;
     float currentTakingDamageCooldown = 0;
 
 
     std::string facing = "left";
+
+    uint64_t uid;
+
+    static uint64_t generateUID();
 
 public:
     bool dying = false;
@@ -39,6 +45,8 @@ public:
     void death();
 
     std::string getFacing();
+    uint64_t getUID();
+
     void setFacing(std::string newFacing);
 
     sf::Vector2f getUnitVectorToPlayer(sf::Vector2f playerPos);

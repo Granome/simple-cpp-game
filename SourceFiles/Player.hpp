@@ -25,12 +25,12 @@ private:
     float criticalDamageCoefficient=1.3;
     int movementSpeed=100;
     std::vector<float> bullets={0, 180}; // vector consists of angles. For example 0 - bullet forward, 180 - bullet backwards
-    bool bulletPenetration=false;
+    bool bulletPenetration=true;
     float bulletVelocity=140;
     float bulletRange=300; // maximum distance bullet can travel
     PlayerFacing facing = down;
     sf::Vector2f positionOfClosestEnemy;
-    float shotCooldown=10;
+    float shotCooldown=1;
 
     int currentLVL=1;
     int currentXP=0;

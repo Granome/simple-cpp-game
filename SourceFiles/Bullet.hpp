@@ -17,19 +17,26 @@ private:
     float criticalDamageCoefficient_;
     float movementSpeed_;
     float maxFlightDistance_;
+    bool penetrating_;
+
     float currentFightDistance_=0;
     sf::Vector2f movementUnitVector_;
 
+
+
 public:
+    std::vector<uint64_t> damagedEnemies;
     bool exploading = false;
 
     
     Bullet(float damage, float criticalHitChance,float criticalDamageCoefficient, 
-    int movementSpeed, float maxFlightDistance, sf::Vector2f movementUnitVector);
+    int movementSpeed, float maxFlightDistance, bool penetrating, sf::Vector2f movementUnitVector);
 
     void moveBullet(sf::Time elapsed);
 
     float getDamage();
+    
+    bool isPenetrating();
 
     void blowUp();
 };

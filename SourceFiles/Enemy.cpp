@@ -9,6 +9,8 @@ Enemy::Enemy(double maxHP_, double movementSpeed_,
       attackRange = attackRange_;
       damagePerHit = damagePerHit_;
       attackSpeed = attackSpeed_;
+
+      uid = generateUID();
    }
 
 void Enemy::takeDamage(double damage_)
@@ -105,7 +107,25 @@ std::string Enemy::getFacing()
    return facing;
 }
 
+
+uint64_t Enemy::getUID()
+{
+   return uid;
+}
+
+
 void Enemy::setFacing(std::string newFacing)
 {
    facing = newFacing;
+}
+
+
+
+uint64_t Enemy::generateUID() 
+{
+   static std::random_device rd;  // Seed for the random number engine
+   static std::mt19937_64 gen(rd()); // Mersenne Twister engine
+   static std::uniform_int_distribution<uint64_t> dis;
+
+   return dis(gen);
 }

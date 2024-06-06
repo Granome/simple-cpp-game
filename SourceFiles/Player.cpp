@@ -159,7 +159,7 @@ void Player::shoot(std::vector<std::unique_ptr<sf::Drawable>>& gameObjects, sf::
             //std::cerr << "Bullet angle: " << bulletAngle << ", Movement vector: (" << movementVector.x << ", " << movementVector.y << ")" << std::endl;
 
             // Creating bullet and adding it to the vector of game objects
-            auto bullet = std::make_unique<Bullet>(damage, criticalHitChance, criticalDamageCoefficient, bulletVelocity, bulletRange, movementVector);
+            auto bullet = std::make_unique<Bullet>(damage, criticalHitChance, criticalDamageCoefficient, bulletVelocity, bulletRange, bulletPenetration, movementVector);
             bullet->setPosition(playerPos);
             bullet->move(movementVector.x * 30, movementVector.y * 30);
 
