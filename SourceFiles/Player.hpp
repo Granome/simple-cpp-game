@@ -18,7 +18,7 @@ class Player : public AnimatedSprite
 {
 private:
     double maxHP=100;
-    double HP=50;
+    double HP=10;
     float attackSpeed=0.6;
     float damage=35;
     float criticalHitChance=0.1;
@@ -30,10 +30,11 @@ private:
     float bulletRange=300; // maximum distance bullet can travel
     PlayerFacing facing = down;
     sf::Vector2f positionOfClosestEnemy;
-    float shotCooldown=1;
+    float shotCooldown=10;
 
+    bool dead = false;
 
-
+    
 
     sf::Vector2f normalizeVector2(const sf::Vector2f& vector);
     
@@ -47,6 +48,7 @@ public:
     float getMovementSpeed();
     double getCurrentHP();
     double getMaxHp();
+    bool isDead();
 
 
     void setFacing(PlayerFacing newFacing);
@@ -56,6 +58,7 @@ public:
     float findDistance(sf::Vector2f pos1, sf::Vector2f pos2);
     sf::Vector2f findClosestEnemy(const std::vector<std::unique_ptr<sf::Drawable>>& gameObjects);
     double calculate_angle(sf::Vector2f pos1, sf::Vector2f pos2);
+
 
 
 

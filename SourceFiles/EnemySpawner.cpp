@@ -34,7 +34,7 @@ void EnemySpawner::spawnEnemy(int enemyNumber, std::vector<std::unique_ptr<sf::D
         gameObjects.emplace_back(std::move(newEnemy));
 
     }
-    std::cout << difficultyAccumulation << " " << currentDifficultyPoints << std::endl;
+    //std::cout << difficultyAccumulation << " " << currentDifficultyPoints << std::endl;
 
 
 }
@@ -99,7 +99,7 @@ void EnemySpawner::update(sf::Time elapsed, std::vector<std::unique_ptr<sf::Draw
     {
         currentDifficultyPoints -= enemyDifficultyCost[nextEnemy];
         spawnEnemy(nextEnemy, gameObjects);
-        std::cout << nextEnemy << std::endl;
+        //std::cout << nextEnemy << std::endl;
         //std::cout << currentDifficultyPoints << std::endl;
         chooseNextEnemy(getCurrentLevel());
     }

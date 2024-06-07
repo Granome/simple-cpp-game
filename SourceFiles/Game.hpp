@@ -13,6 +13,7 @@
 #include "MovementManager.hpp"
 #include "HealthBar.hpp"
 #include "XpBar.hpp"
+#include "GameOverText.hpp"
 #include "EnemySpawner.hpp"
 
 class Game
@@ -21,15 +22,22 @@ private:
     std::vector<std::unique_ptr<sf::Drawable>> gameObjects;
     std::vector<std::unique_ptr<sf::Drawable>> uiObjects;
 
-    double totalTime;
+    double totalTime = 0;
+    double inGameTime = 0;
     float timeScale=1;
+    float timeSlowerDomain=1; // x of exponential function
+
+    bool timeSlowing = false; //slows time if true
+
+    bool gameIsOver = false;
+
     sf::RenderWindow window;
     sf::Vector2f windowCentre;
     sf::Clock clock;
-    InputManager inputManager; // not used yet
+    InputManager inputManager;
     MovementManager movementManager;
     EnemySpawner enemySpawner;
-    int currentDifficultyPoints;
+
 
 
     void GameLoop();
@@ -38,10 +46,19 @@ public:
     Game();
     void start();
     void update();
+    void gameOver();
     void checkEnemyAttacks();
+    void checkPlayerDeath();
     void handleShooting(sf::Time elapsed);
     sf::Vector2f findWindowCentre(sf::RenderWindow& window);
     void checkBulletHits();
     void updateHealthBar();
     void updateXPBar(EnemySpawner enemySpawner);
+
+    void exponentialTimeSlower(sf::Time elapsed, bool slowing);
+
+    void setTimeSlowing(bool isSlowing);
+
+    void resetAllParameters();
+
 };

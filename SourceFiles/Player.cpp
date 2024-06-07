@@ -19,11 +19,31 @@ Player::Player()
     AnimationState move_left("move_left", 6, true);
     AnimationState move_right("move_right", 6, true);
 
-    std::vector<AnimationState> animationStates =  {idle_down, idle_left, idle_right, idle_up, move_down, move_left, move_right, move_up};
+    AnimationState hit_down("hit_down", 6, false);
+    AnimationState hit_up("hit_up", 6, false);
+    AnimationState hit_left("hit_left", 6, false);
+    AnimationState hit_right("hit_right", 6, false);
+
+    AnimationState death_down("death_down", 11, false);
+    AnimationState death_up("death_up", 11, false);
+    AnimationState death_left("death_left", 11, false);
+    AnimationState death_right("death_right", 11, false);
+
+    AnimationState dead_down("dead_down", 1, true);
+    AnimationState dead_up("dead_up", 1, true);
+    AnimationState dead_left("dead_left", 1, true);
+    AnimationState dead_right("dead_right", 1, true);
+
+    std::vector<AnimationState> animationStates =  {idle_down, idle_left, idle_right, idle_up,
+                                            move_down, move_left, move_right, move_up,
+                                            hit_down, hit_left, hit_right, hit_up,
+                                            death_down, death_left, death_right, death_up,
+                                            dead_down, dead_left, dead_right, dead_up
+                                            };
 
     this->setPosition(300, 300);
     this->changeAnimationState("idle");
-    Animation animation("..\\Resourses\\Animations\\Character.png", 108, animationStates);
+    Animation animation("..\\Resourses\\Animations\\Character.png", 112, animationStates);
     this->setAnimation(animation);
     this->setFps(5);
 }
@@ -38,18 +58,46 @@ void Player::takeDamage(double damage)
 
     HP -= damage;
     if (HP <= 0)
-   {
-      death();
-   }
+    {
+        if (!dead)
+        {
+            death();
+        }
+    }
 }
 void Player::death()
 {
-    std::cout << "DEATH";
+    std::string facingStr;
+    switch (facing)
+    {
+        case 0:
+            facingStr = "_up";
+            break;
+        case 1:
+            facingStr = "_down";
+            break;
+        case 2:
+            facingStr = "_left";
+            break;
+        case 3:
+            facingStr = "_right";
+            break;
+    }
+    dead = true;
+    shotCooldown = 30;
+    movementSpeed = 2;
+    setFps(12);
+    changeAnimationState("death"+facingStr);
 }
 
 float Player::getMovementSpeed()
 {
     return movementSpeed;
+}
+
+bool Player::isDead()
+{
+    return dead;
 }
 
 

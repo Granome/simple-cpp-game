@@ -4,14 +4,16 @@
 Game::Game()
 {
     window.create(sf::VideoMode(800, 600), "The great Obliterator");
+    window.setFramerateLimit(200);
+    windowCentre = findWindowCentre(window);
 }
 
 void Game::start()
 {
+    resetAllParameters();
 
     window.clear(sf::Color::Black);
-    window.setFramerateLimit(200);
-    windowCentre = findWindowCentre(window);
+
 
     Background background;
     background.fillTheWindow(window.getSize());
@@ -84,7 +86,17 @@ void Game::update()
         updateXPBar(enemySpawner);
         enemySpawner.update(elapsed * timeScale, gameObjects);
 
+        totalTime += elapsed.asSeconds();
+        inGameTime += elapsed.asSeconds() * timeScale;
+        exponentialTimeSlower(elapsed, timeSlowing);
 
+        checkPlayerDeath();
+
+        if (gameIsOver && sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+        {
+            start();
+            break;
+        }
 
 
         window.clear(sf::Color::Black);
@@ -229,3 +241,92 @@ void Game::updateXPBar(EnemySpawner enemySpawner)
 
     }
 }
+
+void Game::checkPlayerDeath()
+{
+    for (const auto& gameObject : gameObjects)
+    {
+        if (!gameObject)
+        {
+            std::cerr << "Null pointer found in gameObjects" << std::endl;
+            continue;
+        }
+        if (Player* p = dynamic_cast<Player*>(gameObject.get()))
+        {
+            if (p->isDead())
+            {
+                gameOver();
+            }
+        }
+    }
+}
+
+void Game::gameOver()
+{
+    if (!gameIsOver)
+    {
+        gameIsOver = true;
+        timeSlowing = true;
+        uiObjects.emplace_back(std::make_unique<GameOverText>(sf::Vector2f(100,100)));
+    }
+        
+}
+
+
+
+
+void Game::exponentialTimeSlower(sf::Time elapsed, bool slowing)
+{
+    timeScale = 10 * log(timeSlowerDomain*10)/46 +0.5; // y=10ln(10x)/46 + 0.5, x : (0.01; 1)
+    if(slowing)
+    {
+        if (timeSlowerDomain > 0.01)
+        {
+            //std::cout << timeScale << "-" << timeSlowerDomain <<std::endl;
+            timeSlowerDomain -= elapsed.asSeconds();
+
+            if(timeSlowerDomain < 0.01)
+            {
+                timeSlowerDomain = 0.01;
+            }
+        }
+    }
+    else
+    {
+        if (timeScale < 1)
+        {
+            timeSlowerDomain += elapsed.asSeconds();
+            if (timeSlowerDomain > 1)
+            {
+                timeSlowerDomain = 1;
+            }
+        }
+    }
+}
+
+
+void Game::setTimeSlowing(bool isSlowing)
+{
+    timeSlowing = isSlowing;
+}
+
+void Game::resetAllParameters()
+{
+    //resets all parameters of Game object to start the game
+    gameObjects.clear();
+    uiObjects.clear();
+
+    totalTime = 0;
+    inGameTime = 0;
+    timeSlowerDomain=1;
+    timeScale=1;
+    timeSlowing = false;
+    gameIsOver = false;
+
+    enemySpawner = EnemySpawner();
+
+}
+
+
+
+

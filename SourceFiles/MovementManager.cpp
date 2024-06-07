@@ -52,18 +52,24 @@ void MovementManager::drawGameObjects(std::vector<std::unique_ptr<sf::Drawable>>
                     break;
             }
 
-
-            if(movementVector == sf::Vector2f(0, 0))
+            if(p->isDead() && p->getAnimationState() == "idle")
             {
-                p->changeAnimationState("idle"+facingStr);
+                p->changeAnimationState("dead" + facingStr);
             }
-            else
+            else if ((p->getAnimationState().substr(0, 4) == "idle" || p->getAnimationState().substr(0, 4) == "move"))
             {
-                p->changeAnimationState("move"+facingStr);
-                
+                if(movementVector == sf::Vector2f(0, 0))
+                { 
+                    p->changeAnimationState("idle"+facingStr);
+                }
+                else
+                {
+                    p->changeAnimationState("move"+facingStr);
+                    
+                }
             }
-
             p->animate(elapsed);
+
 
         }
 
