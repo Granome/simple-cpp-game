@@ -50,8 +50,25 @@ public:
     double getMaxHp();
     bool isDead();
 
-
+    //setters
     void setFacing(PlayerFacing newFacing);
+
+    void setMaxHP(double maxHP) { this->maxHP = maxHP; }
+    void setHP(double HP) { this->HP = HP; }
+    void setAttackSpeed(float attackSpeed) { this->attackSpeed = attackSpeed; }
+    void setDamage(float damage) { this->damage = damage; }
+    void setCriticalHitChance(float criticalHitChance) { this->criticalHitChance = criticalHitChance; }
+    void setCriticalDamageCoefficient(float criticalDamageCoefficient) { this->criticalDamageCoefficient = criticalDamageCoefficient; }
+    void setMovementSpeed(int movementSpeed) { this->movementSpeed = movementSpeed; }
+    void setBullets(const std::vector<float>& bullets) { this->bullets = bullets; }
+    void setBulletPenetration(bool bulletPenetration) { this->bulletPenetration = bulletPenetration; }
+    void setBulletVelocity(float bulletVelocity) { this->bulletVelocity = bulletVelocity; }
+    void setBulletRange(float bulletRange) { this->bulletRange = bulletRange; }
+    void setPositionOfClosestEnemy(const sf::Vector2f& position) { this->positionOfClosestEnemy = position; }
+    void setShotCooldown(float shotCooldown) { this->shotCooldown = shotCooldown; }
+    void setDead(bool dead) { this->dead = dead; }
+
+
     PlayerFacing getFacing();
     void addBeard();
 

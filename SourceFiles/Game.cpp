@@ -30,11 +30,7 @@ void Game::start()
 
     gameObjects.emplace_back(std::make_unique<Player>(player));
 
-
-
-
-
-
+    
     
 
 
@@ -62,14 +58,13 @@ void Game::update()
     {
         sf::Time elapsed = clock.restart();
 
-
-
-
         sf::Event event;
         while (window.pollEvent(event)) 
         {
             if (event.type == sf::Event::Closed)
                 window.close();
+
+            console.handleEvent(event);
 
         }
 
@@ -78,6 +73,20 @@ void Game::update()
         movementManager.moveEnemies(gameObjects, elapsed, timeScale, windowCentre);
         movementManager.movePlayer(gameObjects, elapsed, timeScale);
         movementManager.moveBullets(gameObjects, elapsed, timeScale);
+
+        console.update();
+        if(console.getIsOpen())
+        {
+            timeSlowing = true;
+        }
+        else
+        {
+            timeSlowing = false;
+        }
+        if (gameIsOver)
+        {
+            timeSlowing = true;
+        }
 
         checkEnemyAttacks();
         handleShooting(elapsed*timeScale);
@@ -92,7 +101,9 @@ void Game::update()
 
         checkPlayerDeath();
 
-        if (gameIsOver && sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+        
+
+        if (gameIsOver && sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && !console.getIsOpen())
         {
             start();
             break;
@@ -110,6 +121,8 @@ void Game::update()
         {
             window.draw(*uiObject);
         }
+
+        window.draw(console);
 
         window.display();
     }

@@ -3,9 +3,11 @@
 #include <memory>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
+#include <SFML/Audio/Music.hpp>
 #include <iostream>
 #include <cmath>
 #include <algorithm>
+
 
 #include "Player.hpp"
 #include "EnemyTypes.hpp"
@@ -15,6 +17,7 @@
 #include "XpBar.hpp"
 #include "GameOverText.hpp"
 #include "EnemySpawner.hpp"
+#include "Console.hpp"
 
 class Game
 {
@@ -32,11 +35,13 @@ private:
     bool gameIsOver = false;
 
     sf::RenderWindow window;
+    sf::Music music;
     sf::Vector2f windowCentre;
     sf::Clock clock;
     InputManager inputManager;
     MovementManager movementManager;
     EnemySpawner enemySpawner;
+    Console console = Console(0, 400, 800, 200, gameObjects);
 
 
 
