@@ -3,7 +3,6 @@
 #include <memory>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
-#include <SFML/Audio/Music.hpp>
 #include <iostream>
 #include <cmath>
 #include <algorithm>
@@ -18,6 +17,7 @@
 #include "GameOverText.hpp"
 #include "EnemySpawner.hpp"
 #include "Console.hpp"
+#include "BoostersManager.hpp"
 
 class Game
 {
@@ -34,13 +34,14 @@ private:
 
     bool gameIsOver = false;
 
+
     sf::RenderWindow window;
-    sf::Music music;
     sf::Vector2f windowCentre;
     sf::Clock clock;
     InputManager inputManager;
     MovementManager movementManager;
     EnemySpawner enemySpawner;
+    BoostersManager boostersManager = BoostersManager(gameObjects);
     Console console = Console(0, 400, 800, 200, gameObjects);
 
 
@@ -49,21 +50,27 @@ private:
     void DrawFrame();
 public:
     Game();
+    void resetAllParameters();
     void start();
     void update();
-    void gameOver();
+
     void checkEnemyAttacks();
     void checkPlayerDeath();
     void handleShooting(sf::Time elapsed);
-    sf::Vector2f findWindowCentre(sf::RenderWindow& window);
     void checkBulletHits();
     void updateHealthBar();
     void updateXPBar(EnemySpawner enemySpawner);
-
     void exponentialTimeSlower(sf::Time elapsed, bool slowing);
+
+    sf::Vector2f findWindowCentre(sf::RenderWindow& window);
+
 
     void setTimeSlowing(bool isSlowing);
 
-    void resetAllParameters();
 
+    void healPlayer();
+
+    void chooseBooster();
+
+    void gameOver();
 };

@@ -18,5 +18,8 @@ class UiElement : public sf::Sprite
 {
 protected:
     sf::Font font = font_.font;
+
+public:
+    virtual ~UiElement() {}
 };
 

@@ -30,9 +30,6 @@ void Game::start()
 
     gameObjects.emplace_back(std::make_unique<Player>(player));
 
-    
-    
-
 
     HealthBar healthBar(40, 510, 200, 20);
     uiObjects.emplace_back(std::make_unique<HealthBar>(healthBar));
@@ -65,6 +62,7 @@ void Game::update()
                 window.close();
 
             console.handleEvent(event);
+            boostersManager.handleEvents(event);
 
         }
 
@@ -75,6 +73,7 @@ void Game::update()
         movementManager.moveBullets(gameObjects, elapsed, timeScale);
 
         console.update();
+
         if(console.getIsOpen())
         {
             timeSlowing = true;
@@ -83,7 +82,7 @@ void Game::update()
         {
             timeSlowing = false;
         }
-        if (gameIsOver)
+        if (gameIsOver || boostersManager.isChoosingBooster())
         {
             timeSlowing = true;
         }
@@ -100,6 +99,7 @@ void Game::update()
         exponentialTimeSlower(elapsed, timeSlowing);
 
         checkPlayerDeath();
+ 
 
         
 
@@ -123,6 +123,8 @@ void Game::update()
         }
 
         window.draw(console);
+
+        boostersManager.displayBoostersMenu(window, sf::RenderStates::Default);
 
         window.display();
     }
@@ -337,8 +339,37 @@ void Game::resetAllParameters()
     gameIsOver = false;
 
     enemySpawner = EnemySpawner();
+    enemySpawner.onLevelUp.emplace_back([&](){chooseBooster();});
+    enemySpawner.onLevelUp.emplace_back([&](){healPlayer();});
 
 }
+
+void Game::chooseBooster()
+{  
+    auto chosenBoosters = boostersManager.chooseThreeBasedOnRarity();
+    
+    boostersManager.setBoostersToChoose(chosenBoosters);
+    boostersManager.setBoosterChoosing();
+}
+
+void Game::healPlayer()
+{
+    for (const auto& gameObject : gameObjects)
+    {
+        if (!gameObject)
+        {
+            std::cerr << "Null pointer found in gameObjects" << std::endl;
+            continue;
+        }
+        if (Player* p = dynamic_cast<Player*>(gameObject.get()))
+        {
+            if (p->getCurrentHP() < p->getMaxHp())
+                p->setHP(p->getMaxHp());
+        }
+    }
+}
+
+
 
 
 

@@ -2,6 +2,8 @@
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+#include <cmath>
+
 #include "Player.hpp"
 #include "AnimatedSprite.hpp"
 #include "Collider.hpp"

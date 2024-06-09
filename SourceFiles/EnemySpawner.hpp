@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <memory>
+#include <functional>
 
 class EnemySpawner 
 {
@@ -14,8 +15,9 @@ private:
     int nextEnemy = 0;
 
     int currentLVL=1;
-    int currentXP=0;
+    int currentXP=90;
     int xpForNextLevel=100;
+
 
     std::vector<int> enemyDifficultyCost = 
     {
@@ -25,6 +27,10 @@ private:
     };
 
 public:
+    std::vector<std::function<void()>> onLevelUp;
+
+    bool levelWasIncreased = false;
+
     EnemySpawner(sf::Vector2f playerPosition=sf::Vector2f(0, 0));
     sf::Vector2f findRandomPosition(sf::Vector2f playerPos, sf::Vector2f enemySpawnRange);
     void spawnEnemy(int enemyNumber, std::vector<std::unique_ptr<sf::Drawable>>& gameObjects);

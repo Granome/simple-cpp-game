@@ -20,7 +20,13 @@ Bullet::Bullet(float damage, float criticalHitChance,float criticalDamageCoeffic
 
 void Bullet::moveBullet(sf::Time elapsed)
 {
+    if (currentFightDistance_ >= maxFlightDistance_)
+    {
+        blowUp();
+    }
     move(movementUnitVector_ * elapsed.asSeconds() * movementSpeed_);
+    currentFightDistance_ += std::sqrt(pow((movementUnitVector_ * elapsed.asSeconds() * movementSpeed_).x, 2) + pow((movementUnitVector_ * elapsed.asSeconds() * movementSpeed_).y, 2));
+
 }
 
 

@@ -18,19 +18,19 @@ class Player : public AnimatedSprite
 {
 private:
     double maxHP=100;
-    double HP=10;
+    double HP=100;
     float attackSpeed=0.6;
     float damage=35;
     float criticalHitChance=0.1;
     float criticalDamageCoefficient=1.3;
     int movementSpeed=100;
-    std::vector<float> bullets={0, 180}; // vector consists of angles. For example 0 - bullet forward, 180 - bullet backwards
+    std::vector<float> bullets={0}; // vector consists of angles. For example 0 - bullet forward, 180 - bullet backwards
     bool bulletPenetration=false;
     float bulletVelocity=140;
     float bulletRange=300; // maximum distance bullet can travel
     PlayerFacing facing = down;
     sf::Vector2f positionOfClosestEnemy;
-    float shotCooldown=10;
+    float shotCooldown=1;
 
     bool dead = false;
 
@@ -53,7 +53,12 @@ public:
     //setters
     void setFacing(PlayerFacing newFacing);
 
-    void setMaxHP(double maxHP) { this->maxHP = maxHP; }
+    void setMaxHP(double maxHP) 
+    { 
+        this->maxHP = maxHP;
+        if (HP > maxHP) 
+            HP=maxHP;  
+    }
     void setHP(double HP) { this->HP = HP; }
     void setAttackSpeed(float attackSpeed) { this->attackSpeed = attackSpeed; }
     void setDamage(float damage) { this->damage = damage; }
@@ -67,6 +72,64 @@ public:
     void setPositionOfClosestEnemy(const sf::Vector2f& position) { this->positionOfClosestEnemy = position; }
     void setShotCooldown(float shotCooldown) { this->shotCooldown = shotCooldown; }
     void setDead(bool dead) { this->dead = dead; }
+
+
+
+    float getAttackSpeed() const 
+    {
+        return attackSpeed;
+    }
+
+    float getDamage() const 
+    {
+        return damage;
+    }
+
+    float getCriticalHitChance() const 
+    {
+        return criticalHitChance;
+    }
+
+    float getCriticalDamageCoefficient() const 
+    {
+        return criticalDamageCoefficient;
+    }
+
+    const std::vector<float>& getBullets() const 
+    {
+        return bullets;
+    }
+
+    bool hasBulletPenetration() const 
+    {
+        return bulletPenetration;
+    }
+
+    float getBulletVelocity() const 
+    {
+        return bulletVelocity;
+    }
+
+    float getBulletRange() const 
+    {
+        return bulletRange;
+    }
+
+    PlayerFacing getFacing() const 
+    {
+        return facing;
+    }
+
+    sf::Vector2f getPositionOfClosestEnemy() const 
+    {
+        return positionOfClosestEnemy;
+    }
+
+    float getShotCooldown() const 
+    {
+        return shotCooldown;
+    }
+
 
 
     PlayerFacing getFacing();

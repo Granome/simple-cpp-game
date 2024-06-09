@@ -131,6 +131,11 @@ void EnemySpawner::levelUp()
     currentLVL++;
     difficultyAccumulation *= 1.2;
     calculateXPForNextLevel();
+    
+    for (auto f : onLevelUp)
+    {
+        f();
+    }
 }
 
 void EnemySpawner::addXP(int xp)
