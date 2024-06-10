@@ -29,6 +29,10 @@ void Enemy::takeDamage(double damage_, EnemySpawner& enemySpawner)
 
 void Enemy::death(EnemySpawner& enemySpawner)
 {
+   if (getAnimationState() == "death_right" || getAnimationState() == "death_left") 
+   {
+      return;
+   }
    changeAnimationState(std::string("death") + "_" + facing);
    dying = true;
    attackCooldown = 11111111;
