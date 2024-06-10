@@ -18,6 +18,7 @@
 #include "EnemySpawner.hpp"
 #include "Console.hpp"
 #include "BoostersManager.hpp"
+#include "TimeCounter.hpp"
 
 class Game
 {
@@ -73,4 +74,5 @@ public:
     void chooseBooster();
 
     void gameOver();
+    void updateTimeCounter(double time);
 };

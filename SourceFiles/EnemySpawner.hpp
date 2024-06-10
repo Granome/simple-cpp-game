@@ -11,18 +11,19 @@ private:
     sf::Vector2f playerPos;
     sf::Vector2f enemySpawnRange = sf::Vector2f(400, 500);
     float currentDifficultyPoints = 0;
-    float difficultyAccumulation = 0.3;
+    float difficultyAccumulation = 0.7;
     int nextEnemy = 0;
 
     int currentLVL=1;
-    int currentXP=90;
+    int currentXP=0;
     int xpForNextLevel=100;
 
 
     std::vector<int> enemyDifficultyCost = 
     {
         1, //Bat
-        5, //Crab
+        4, //Crab
+        12  //Slime
 
     };
 

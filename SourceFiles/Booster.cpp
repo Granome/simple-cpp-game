@@ -93,19 +93,19 @@ void InfoBox::setTextColorFromRarity(int rarity)
 {
     switch (rarity)
     {
-    case 1:
+    case 5:
         name.setFillColor(sf::Color(9, 255, 0));
         name.setOutlineColor(sf::Color(50, 168, 82));
         break;
-    case 2:
+    case 4:
         name.setFillColor(sf::Color(0, 102, 255));
         name.setOutlineColor(sf::Color(0, 32, 81));
         break;
-    case 3:
+    case 2:
         name.setFillColor(sf::Color(255, 179, 0));
         name.setOutlineColor(sf::Color(245, 0, 122));
         break;
-    case 4:
+    case 1:
         name.setFillColor(sf::Color(44, 0, 94));
         name.setOutlineColor(sf::Color(255, 28, 28));
         break;

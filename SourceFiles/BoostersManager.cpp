@@ -3,6 +3,18 @@
 
 sf::Texture t;
 sf::Texture blank;
+sf::Texture fearless_bastard_t;
+sf::Texture glass_cannon_t;
+sf::Texture hit_the_gym_t;
+sf::Texture limpy_sniper_t;
+sf::Texture my_daddies_rapiers_t;
+sf::Texture my_teeth_are_sharp_t;
+sf::Texture one_of_the_edema_ruh_t;
+sf::Texture requiescat_in_pace_t;
+sf::Texture son_of_a_gun_t;
+sf::Texture tra_ta_ta_t;
+sf::Texture try_catch_me_t;
+sf::Texture shotgun_t;
 
 
 void BoostersManager::fearlessBastard()
@@ -16,7 +28,7 @@ void BoostersManager::fearlessBastard()
         }
         if (Player* p = dynamic_cast<Player*>(gameObject.get()))
         {
-            p->setMovementSpeed(p->getMovementSpeed()*0.8);
+            p->setMovementSpeed(p->getMovementSpeed()*0.6);
             p->setDamage(p->getDamage()*1.2);
         }
     }
@@ -35,17 +47,213 @@ void BoostersManager::glassCannon()
         {
             p->setMaxHP(p->getMaxHp()*0.1);
             p->setDamage(p->getDamage()*3);
+            p->setMovementSpeed(p->getMovementSpeed()*1.4);
+        }
+    }
+}
+
+void BoostersManager::hitTheGym()
+{
+    for (const auto& gameObject : gameObjects)
+    {
+        if (!gameObject)
+        {
+            std::cerr << "Null pointer found in gameObjects" << std::endl;
+            continue;
+        }
+        if (Player* p = dynamic_cast<Player*>(gameObject.get()))
+        {
+            p->setDamage(p->getDamage()*1.4);
+            p->setMovementSpeed(p->getMovementSpeed()*1.2);
+        }
+    }
+}
+
+void BoostersManager::limpySniper()
+{
+    for (const auto& gameObject : gameObjects)
+    {
+        if (!gameObject)
+        {
+            std::cerr << "Null pointer found in gameObjects" << std::endl;
+            continue;
+        }
+        if (Player* p = dynamic_cast<Player*>(gameObject.get()))
+        {
+            p->setDamage(p->getDamage()*2);
+            p->setMovementSpeed(p->getMovementSpeed()*0.85);
+            p->setBulletRange(p->getBulletRange()*2.5);
+            p->setBulletVelocity(p->getBulletVelocity()*3);
+        }
+    }
+}
+
+void BoostersManager::myDaddiesRapiers()
+{
+    for (const auto& gameObject : gameObjects)
+    {
+        if (!gameObject)
+        {
+            std::cerr << "Null pointer found in gameObjects" << std::endl;
+            continue;
+        }
+        if (Player* p = dynamic_cast<Player*>(gameObject.get()))
+        {
+            p->setBulletPenetration(true);
+        }
+    }
+}
+
+void BoostersManager::myTeethAreSharp()
+{
+    for (const auto& gameObject : gameObjects)
+    {
+        if (!gameObject)
+        {
+            std::cerr << "Null pointer found in gameObjects" << std::endl;
+            continue;
+        }
+        if (Player* p = dynamic_cast<Player*>(gameObject.get()))
+        {
+            p->setDamage(p->getDamage()*1.35);
+            p->setBulletRange(p->getBulletRange()*0.3);
+            p->setMovementSpeed(p->getMovementSpeed()*1.1);
+            p->setBulletVelocity(p->getBulletVelocity()*1.4);
+        }
+    }
+}
+
+void BoostersManager::oneOfTheEdemaRuh()
+{
+    for (const auto& gameObject : gameObjects)
+    {
+        if (!gameObject)
+        {
+            std::cerr << "Null pointer found in gameObjects" << std::endl;
+            continue;
+        }
+        if (Player* p = dynamic_cast<Player*>(gameObject.get()))
+        {
+            p->setCriticalHitChance(p->getCriticalHitChance()+0.3);
+            p->setCriticalDamageCoefficient(p->getCriticalDamageCoefficient()*1.5);
+            p->setBulletRange(p->getBulletRange()*0.4);
+            p->setMovementSpeed(p->getMovementSpeed()*1.1);
+
+        }
+    }
+}
+
+void BoostersManager::requiescatInPace()
+{
+    for (const auto& gameObject : gameObjects)
+    {
+        if (!gameObject)
+        {
+            std::cerr << "Null pointer found in gameObjects" << std::endl;
+            continue;
+        }
+        if (Player* p = dynamic_cast<Player*>(gameObject.get()))
+        {
+            p->setCriticalHitChance(p->getCriticalHitChance()+0.3);
+            p->setCriticalDamageCoefficient(p->getCriticalDamageCoefficient()*2);
+            p->setBulletRange(p->getBulletRange()*2);
+
+        }
+    }
+}
+
+void BoostersManager::sonOfAGun()
+{
+    for (const auto& gameObject : gameObjects)
+    {
+        if (!gameObject)
+        {
+            std::cerr << "Null pointer found in gameObjects" << std::endl;
+            continue;
+        }
+        if (Player* p = dynamic_cast<Player*>(gameObject.get()))
+        {
+            p->setCriticalDamageCoefficient(p->getCriticalDamageCoefficient()+0.2);
+            p->setBulletVelocity(p->getBulletVelocity()*1.4);
+            p->setDamage(p->getDamage()*1.4);
+        }
+    }
+}
+
+void BoostersManager::traTaTa()
+{
+    for (const auto& gameObject : gameObjects)
+    {
+        if (!gameObject)
+        {
+            std::cerr << "Null pointer found in gameObjects" << std::endl;
+            continue;
+        }
+        if (Player* p = dynamic_cast<Player*>(gameObject.get()))
+        {
+            p->setCriticalHitChance(0);
+            p->setBulletVelocity(p->getBulletVelocity()*1.4);
+            p->setDamage(p->getDamage()*0.1);
+            p->setMovementSpeed(p->getMovementSpeed()*1.1);
+            p->setAttackSpeed(p->getAttackSpeed()*10);
+        }
+    }
+}
+
+void BoostersManager::tryToCatchMeSlowpoke()
+{
+    for (const auto& gameObject : gameObjects)
+    {
+        if (!gameObject)
+        {
+            std::cerr << "Null pointer found in gameObjects" << std::endl;
+            continue;
+        }
+        if (Player* p = dynamic_cast<Player*>(gameObject.get()))
+        {
+            p->setCriticalHitChance(p->getCriticalHitChance()+0.2);
+            p->setMaxHP(p->getMaxHp()*0.5);
+            p->setMovementSpeed(p->getMovementSpeed()*1.2);
+        }
+    }
+}
+
+void BoostersManager::weHaveAShotgunAtHome()
+{
+    for (const auto& gameObject : gameObjects)
+    {
+        if (!gameObject)
+        {
+            std::cerr << "Null pointer found in gameObjects" << std::endl;
+            continue;
+        }
+        if (Player* p = dynamic_cast<Player*>(gameObject.get()))
+        {
+            p->setMovementSpeed(p->getMovementSpeed()*0.9);
+            p->setBullets({-15, -10, -5, 0, 5, 10, 15});
+            p->setBulletRange(p->getBulletRange()*0.35);
+            p->setAttackSpeed(p->getAttackSpeed()*1.3);
+            p->setBulletVelocity(p->getBulletVelocity()*1.4);
+            p->setDamage(p->getDamage()*0.18);
         }
     }
 }
 
 
-
 BoostersManager::BoostersManager(std::vector<std::unique_ptr<sf::Drawable>>& gameObjects_) : gameObjects(gameObjects_)
 {
-    auto fearlessBastard_ = std::make_unique<Booster>([&]() { fearlessBastard(); }, 1, "Fearless bastard", "A bit less movement\nspeed\nA bit more damage");
-    auto glassCannon_ = std::make_unique<Booster>([&]() { glassCannon(); }, 2, "Glass cannon", "MUCH less HP\nTriple damage");
-    auto glassCannon2_ = std::make_unique<Booster>([&]() { glassCannon(); }, 2, "Glass cannonnnnnnn", "MUCH less HP\nTriple damage");
+    auto fearlessBastard_ = std::make_unique<Booster>([&]() { fearlessBastard(); }, 5, "Fearless bastard", "A bit less movement\nspeed\nA bit more damage");
+    auto hit_the_gym_ = std::make_unique<Booster>([&]() { hitTheGym(); }, 5, "Hit the gym", "A bit more damage\nA bit more movement\nspeed");
+    auto glassCannon_ = std::make_unique<Booster>([&]() { glassCannon(); }, 4, "Glass cannon", "MUCH less HP\nTriple damage\nMuch more speed");
+    auto limpy_sniper = std::make_unique<Booster>([&]() { limpySniper(); }, 4, "Limpy sniper", "Much more damage\nMuch less movement\nspeed\nMuch bigger bullet range\nBullets are much faster");
+    auto try_catch_me = std::make_unique<Booster>([&]() { tryToCatchMeSlowpoke(); }, 4, "Can't catch me!", "Bigger critical chance\nMUCH more movement\nspeed\nTwice less HP");
+    auto my_teeth_are_sharp = std::make_unique<Booster>([&]() { myTeethAreSharp(); }, 2, "My teeth are SHARK", "A bit more damage\nMuch smaller bullet range\nA bit more speed\nA bit faster bullets");
+    auto son_of_a_gun = std::make_unique<Booster>([&]() { sonOfAGun(); }, 2, "Son of a gun", "A bit more damage\nBigger critical damage\nMuch faster bullets");
+    auto one_of_the_edema_ruh = std::make_unique<Booster>([&]() { oneOfTheEdemaRuh(); }, 2, "The Edema Ruh", "Bigger critical chance\nBigger critical damage\nA bit mere speed\nSmaller bullet range");
+    auto shotgun = std::make_unique<Booster>([&]() { weHaveAShotgunAtHome(); }, 2, "SHOT!gun", "Shotgun shooting patern\nLess movement speed\nFaster bullets\nMuch shorter bullet range\nA bit faster attask speed");
+    auto my_daddies_rapiers = std::make_unique<Booster>([&]() { myDaddiesRapiers(); }, 1, "My dadies rapiers", "Bullets pierce\nthrough enemies");
+    auto requiescat_in_pace = std::make_unique<Booster>([&]() { requiescatInPace(); }, 1, "Requiescat in pace", "Double critical damage\nMuch more critical chance\nDouble bullet range");
+    auto tra_ta_ta = std::make_unique<Booster>([&]() { traTaTa(); }, 1, "Trra-ta-ta-ta-ta!!!", "MUCH faster shooting\nA bit more movement\nspeed\nA bit faster bullets\nCritical chanse = 0\nMUCH smaller damage");
 
     // Ensure texture loading
 
@@ -55,16 +263,72 @@ BoostersManager::BoostersManager(std::vector<std::unique_ptr<sf::Drawable>>& gam
     if (!blank.loadFromFile("../Resourses/Textures/BoosterCards/card_blank.png")) {
         std::cerr << "Failed to load texture" << std::endl;
     }
+    if (!glass_cannon_t.loadFromFile("../Resourses/Textures/BoosterCards/glass_cannon.png")) {
+        std::cerr << "Failed to load texture" << std::endl;
+    }
+    if (!fearless_bastard_t.loadFromFile("../Resourses/Textures/BoosterCards/fearless_bastard.png")) {
+        std::cerr << "Failed to load texture" << std::endl;
+    }
+    if (!hit_the_gym_t.loadFromFile("../Resourses/Textures/BoosterCards/hit_the_gym.png")) {
+        std::cerr << "Failed to load texture" << std::endl;
+    }
+    if (!limpy_sniper_t.loadFromFile("../Resourses/Textures/BoosterCards/limpy_sniper.png")) {
+        std::cerr << "Failed to load texture" << std::endl;
+    }
+    if (!my_daddies_rapiers_t.loadFromFile("../Resourses/Textures/BoosterCards/my_daddies_rapiers.png")) {
+        std::cerr << "Failed to load texture" << std::endl;
+    }
+    if (!my_teeth_are_sharp_t.loadFromFile("../Resourses/Textures/BoosterCards/my_teeth_are_sharp.png")) {
+        std::cerr << "Failed to load texture" << std::endl;
+    }
+    if (!one_of_the_edema_ruh_t.loadFromFile("../Resourses/Textures/BoosterCards/one_of_the_edema_ruh.png")) {
+        std::cerr << "Failed to load texture" << std::endl;
+    }
+    if (!requiescat_in_pace_t.loadFromFile("../Resourses/Textures/BoosterCards/requiescat_in_pace.png")) {
+        std::cerr << "Failed to load texture" << std::endl;
+    }
+    if (!son_of_a_gun_t.loadFromFile("../Resourses/Textures/BoosterCards/son_of_a_gun.png")) {
+        std::cerr << "Failed to load texture" << std::endl;
+    }
+    if (!tra_ta_ta_t.loadFromFile("../Resourses/Textures/BoosterCards/tra_ta_ta.png")) {
+        std::cerr << "Failed to load texture" << std::endl;
+    }
+    if (!try_catch_me_t.loadFromFile("../Resourses/Textures/BoosterCards/try_to_catch_me_slowpoke.png")) {
+    std::cerr << "Failed to load texture" << std::endl;
+    }    
+    if (!shotgun_t.loadFromFile("../Resourses/Textures/BoosterCards/we_have_a_shotgun_at_home.png")) {
+        std::cerr << "Failed to load texture" << std::endl;
+    }
+
     
-    fearlessBastard_->setTexture(t);
-    glassCannon_->setTexture(t);
-    glassCannon2_->setTexture(t);
+    fearlessBastard_->setTexture(fearless_bastard_t);
+    glassCannon_->setTexture(glass_cannon_t);
+    hit_the_gym_->setTexture(hit_the_gym_t);
+    limpy_sniper->setTexture(limpy_sniper_t);
+    my_daddies_rapiers->setTexture(my_daddies_rapiers_t);
+    my_teeth_are_sharp->setTexture(my_teeth_are_sharp_t);
+    one_of_the_edema_ruh->setTexture(one_of_the_edema_ruh_t);
+    requiescat_in_pace->setTexture(requiescat_in_pace_t);
+    son_of_a_gun->setTexture(son_of_a_gun_t);
+    tra_ta_ta->setTexture(tra_ta_ta_t);
+    try_catch_me->setTexture(try_catch_me_t);
+    shotgun->setTexture(shotgun_t);
 
     infoBox.setBgTexture(blank);
 
+
     boosters.push_back(std::move(fearlessBastard_));
     boosters.push_back(std::move(glassCannon_));
-    boosters.push_back(std::move(glassCannon2_));
+    boosters.push_back(std::move(hit_the_gym_));
+    boosters.push_back(std::move(limpy_sniper));
+    boosters.push_back(std::move(my_daddies_rapiers));
+    boosters.push_back(std::move(my_teeth_are_sharp));
+    boosters.push_back(std::move(one_of_the_edema_ruh));
+    boosters.push_back(std::move(requiescat_in_pace));
+    boosters.push_back(std::move(son_of_a_gun));
+    boosters.push_back(std::move(tra_ta_ta));
+    boosters.push_back(std::move(try_catch_me));
+    boosters.push_back(std::move(shotgun));
     
 
 }

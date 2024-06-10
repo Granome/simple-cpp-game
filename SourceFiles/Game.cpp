@@ -38,6 +38,8 @@ void Game::start()
     XpBar xpBar(40, 550, 180, 15);
     uiObjects.emplace_back(std::make_unique<XpBar>(xpBar));
 
+    TimeCounter timeCounter(sf::Vector2f(window.getSize().x-80, 40), 15);
+    uiObjects.emplace_back(std::make_unique<TimeCounter>(timeCounter));
 
 
     update();
@@ -92,11 +94,12 @@ void Game::update()
         checkBulletHits();
         updateHealthBar();
         updateXPBar(enemySpawner);
+        updateTimeCounter(inGameTime);
         enemySpawner.update(elapsed * timeScale, gameObjects);
 
+        exponentialTimeSlower(elapsed, timeSlowing);
         totalTime += elapsed.asSeconds();
         inGameTime += elapsed.asSeconds() * timeScale;
-        exponentialTimeSlower(elapsed, timeSlowing);
 
         checkPlayerDeath();
  
@@ -287,7 +290,22 @@ void Game::gameOver()
         
 }
 
+void Game::updateTimeCounter(double time)
+{
+    for (const auto& uiObject : uiObjects)
+    {
+        if (!uiObject)
+        {
+            std::cerr << "Null pointer found in gameObjects" << std::endl;
+            continue;
+        }
+        if (TimeCounter* counter = dynamic_cast<TimeCounter*>(uiObject.get()))
+        {
+            counter->updateTime(time);
+        }
 
+    }
+}
 
 
 void Game::exponentialTimeSlower(sf::Time elapsed, bool slowing)

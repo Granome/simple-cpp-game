@@ -20,7 +20,7 @@ private:
     double maxHP=100;
     double HP=100;
     float attackSpeed=0.6;
-    float damage=35;
+    float damage=20;
     float criticalHitChance=0.1;
     float criticalDamageCoefficient=1.3;
     int movementSpeed=100;
@@ -56,8 +56,12 @@ public:
     void setMaxHP(double maxHP) 
     { 
         this->maxHP = maxHP;
+        if(maxHP==0)
+        {
+            maxHP = 1;
+        }
         if (HP > maxHP) 
-            HP=maxHP;  
+            HP=maxHP;
     }
     void setHP(double HP) { this->HP = HP; }
     void setAttackSpeed(float attackSpeed) { this->attackSpeed = attackSpeed; }

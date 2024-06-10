@@ -21,11 +21,13 @@ void EnemySpawner::spawnEnemy(int enemyNumber, std::vector<std::unique_ptr<sf::D
     switch (enemyNumber)
     {
         case 0:
-
             newEnemy = std::make_unique<Bat>();
             break;
         case 1:
             newEnemy = std::make_unique<Crab>();
+            break;
+        case 2:
+            newEnemy = std::make_unique<Slime>();
             break;
     }
     if (newEnemy)
@@ -46,7 +48,7 @@ int randomInt(int min, int max)
     if (max-min != 0)
     {
         //std::cout << rand() % (max-min+1)+min << std::endl;
-        return rand()%((max-min)+min+1);
+        return rand() % (max-min+1) + min;
     }
     else
     {
@@ -73,8 +75,8 @@ sf::Vector2f EnemySpawner::findRandomPosition(sf::Vector2f playerPos, sf::Vector
     float distance = randomInt(enemySpawnRange.x, enemySpawnRange.y);
 
     // Calculate new coordinates
-    float newX = playerPos.x + distance * cos(angleRadians);
-    float newY = playerPos.y + distance * sin(angleRadians);
+    float newX = playerPos.x + (distance * cos(angleRadians));
+    float newY = playerPos.y + (distance * sin(angleRadians));
 
     return sf::Vector2f(newX, newY);
 }
@@ -123,7 +125,7 @@ int EnemySpawner::getCurrentLevel()
 
 void EnemySpawner::calculateXPForNextLevel()
 {
-    xpForNextLevel = xpForNextLevel + currentLVL*100;
+    xpForNextLevel = xpForNextLevel + currentLVL*200;
 }
 
 void EnemySpawner::levelUp()

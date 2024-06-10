@@ -164,14 +164,18 @@ sf::Vector2f Player::findClosestEnemy(const std::vector<std::unique_ptr<sf::Draw
     {
         if (Enemy* enemy = dynamic_cast<Enemy*>(gameObject.get()))
         {
-            //finding centre of enemy
-            sf::FloatRect enemyBounds= enemy->getGlobalBounds();
-            sf::Vector2f enemyPos = sf::Vector2f(enemyBounds.left + enemyBounds.width/2, enemyBounds.top + enemyBounds.height/2);
-            
-            if(findDistance(playerPos, closestEnemy) > findDistance(playerPos, enemyPos))
+            if (enemy->getAnimationState() != "death_right" && enemy->getAnimationState() != "death_left")
             {
-                //std::cout << enemyPos.x << " " << enemyPos.y << std::endl;
-                closestEnemy = enemyPos;
+                //finding centre of enemy
+                sf::FloatRect enemyBounds= enemy->getGlobalBounds();
+                sf::Vector2f enemyPos = sf::Vector2f(enemyBounds.left + enemyBounds.width/2, enemyBounds.top + enemyBounds.height/2);
+                
+                if(findDistance(playerPos, closestEnemy) > findDistance(playerPos, enemyPos))
+                {
+                    //std::cout << enemyPos.x << " " << enemyPos.y << std::endl;
+                    closestEnemy = enemyPos;
+                }
+
             }
         }
     }

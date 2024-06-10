@@ -29,6 +29,17 @@ public:
 
     void fearlessBastard();
     void glassCannon();
+    void hitTheGym();
+    void limpySniper();
+    void myDaddiesRapiers();
+    void myTeethAreSharp();
+    void oneOfTheEdemaRuh();
+    void requiescatInPace();
+    void sonOfAGun();
+    void traTaTa();
+    void tryToCatchMeSlowpoke();
+    void weHaveAShotgunAtHome();
+
     std::vector<std::unique_ptr<Booster>> chooseThreeBasedOnRarity();
     void handleEvents(sf::Event e);
     void highlightBooster(Booster& booster);

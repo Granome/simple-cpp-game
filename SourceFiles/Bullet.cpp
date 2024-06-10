@@ -32,7 +32,14 @@ void Bullet::moveBullet(sf::Time elapsed)
 
 float Bullet::getDamage()
 {
-    return damage_;
+    if(rand() % 101 < criticalHitChance_* 100)
+    {
+        return damage_*criticalDamageCoefficient_;
+    }
+    else
+    {
+        return damage_;
+    }
 }
 
 bool Bullet::isPenetrating()
