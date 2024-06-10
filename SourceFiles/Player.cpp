@@ -114,6 +114,7 @@ PlayerFacing Player::getFacing()
 
 void Player::addBeard()
 {
+    //USAGE OF sf::RenderTexture and blend modes, NOT COVERED IN THE COURSE! 
     sf::Texture tex0;
     if (!tex0.loadFromFile("..\\Resourses\\Animations\\Character.png")) {
         std::cerr << "Failed to load Character.png" << std::endl;

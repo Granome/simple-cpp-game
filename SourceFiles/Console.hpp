@@ -26,7 +26,8 @@ private:
 
 
     std::unordered_map<std::string, std::function<void(const std::string&)>> commands;
-    
+    //USAGE OF std::function, NOT COVERED IN THE COURSE! 
+
     sf::Vector2f position;
     sf::Vector2f size;
     

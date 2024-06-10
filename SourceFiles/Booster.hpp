@@ -51,6 +51,7 @@ public:
     void positionTexts();
     void setBgTexture(sf::Texture& tx);
     void setTextColorFromRarity(int rarity);
+    //OVERRIDING DRAW FUNCTION, probably WAS NOT COVERED IN THE COURSE!
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
     void setName(std::string name_){name.setString(name_);}
