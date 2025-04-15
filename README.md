@@ -1,8 +1,25 @@
-This it simple 2d game written on c++ sfml library.
-All the code is devided in cpp and header classes.
-Unfortunatelly this game does not have any sounds, as some sound libraries did not work on Windows with my compiler.
-Here you can watch a demo of my game:
-https://youtu.be/xtAaMew_tBo
+# Bullet Hell Platformer (C++ / SFML)
 
-All the textures are included and all the paths are relative in code, no need to change them. 
-SFML library needs to be installed and included for compiling.
+A 2D bullet-hell style platformer game built with C++ and SFML.
+
+## Features
+- Player movement with shooting mechanics
+- Bullet patterns and enemy waves
+- Level and power-up system
+- Collision detection system
+- Custom sprite assets
+- In-game text console
+
+## Requirements
+- SFML 2.5+ library
+- C++17 compatible compiler
+
+## Installation
+1. Clone this repository
+2. Compile with SFML dependencies linked
+3. Run the generated executable
+
+All assets are included with relative paths.
+
+## Demo
+Gameplay video available on [YouTube](https://youtu.be/xtAaMew_tBo)
